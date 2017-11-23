@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project-private xmlns="http://www.netbeans.org/ns/project-private/1">
+    <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
+    <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
+        <group>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/reusable/promocion.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/front/masterPageWelcome.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/errors/404.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/app/Http/Middleware/ReturnIfnotAuth.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/public/js/Compartido.js</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/reusable/createNewPuntoItinerario.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/lang/es/front/verify.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/app/Http/Controllers/ImageController.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/public/css/base/layoutBase.css</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/reusable/imageContainer.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/emails/auth/verify.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/app/Models/Invitaciones_Amigos.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/app/Logic/Image/ImageRepository.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/RegistroOperadores/registroStep2.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/lang/en/front/verify.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/reusable/endServicios.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/public/css/masterPagesRegistro.css</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/app/Jobs/SendMail.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/Registro/editItinerario.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/RegistroOperadores/registroStep4.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/front/masterPageServicios.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/app/Http/Controllers/Auth/AuthController.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/errors/403.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/reusable/listaItinerarios.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/reusable/maps.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/app/Models/Eventos_usuario_Servicio.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/RegistroOperadores/registroStep3.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/public/js/imageContainer/jquery.tinycarousel.js</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/reusable/modifyEventos_Promociones.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/database/migrations/2015_11_25_121637_create_eventos_usuario_servicio_table.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/app/Http/Controllers/UsuarioServiciosController.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/Registro/catalogoServicio.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/RegistroOperadores/registroStep1.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/app/Repositories/OperadorRepository.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/reusable/invitar_amigo.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/reusable/createNewEvent.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/Registro/listaServiciosUsuario.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/Registro/editEvento.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/app/Http/Middleware/RedirectIfAuthenticated.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/RegistroOperadores/registroStep1.blade.php.orig</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/app/Http/routes.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/app/Repositories/ServiciosOperadorRepository.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/Registro/editPromocion.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/resources/views/reusable/createNewServicio.blade.php</file>
+            <file>file:/C:/xampp/htdocs/IguanaTrip/app/Http/Controllers/ServicioController.php</file>
+        </group>
+    </open-files>
+</project-private>
