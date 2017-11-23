@@ -20,45 +20,45 @@
 
         <!-- Theme Styles -->
 
-        <link rel="apple-touch-icon" href="{{ asset('public/img/60x60_logo_iwana.png')}}">
+        <link rel="apple-touch-icon" href="{{ asset('img/60x60_logo_iwana.png')}}">
 
-        <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('public/img/76x76logo_iwana.png')}}">
-        <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('public/img/120x120logo_iwana.png')}}">
-        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('public/img/180x180logo_iwana.png')}}">
-        <link rel="icon" sizes="180x180" href="{{ asset('public/img/180x180logo_iwana.png')}}">
+        <link rel="apple-touch-icon" sizes="76x76" href="{{ asset('img/76x76logo_iwana.png')}}">
+        <link rel="apple-touch-icon" sizes="120x120" href="{{ asset('img/120x120logo_iwana.png')}}">
+        <link rel="apple-touch-icon" sizes="180x180" href="{{ asset('img/180x180logo_iwana.png')}}">
+        <link rel="icon" sizes="180x180" href="{{ asset('img/180x180logo_iwana.png')}}">
 
 
         <meta property="og:title" content="iWaNaTrip | Ecuador" /> 
         <meta property="og:description" content="es un espacio de busqueda para la red viajeros de todo el mundo, permite compartir el contenido de forma sencilla a traves de internet.
               iWaNaTrip es experiencia de vida. Deja de ser turista, conviertete en viajero. Viaja por el mundo y descubre Ecuador" />
-        <meta property="og:image" content="{{ asset('public/img/index-fondo.jpg')}}" />
+        <meta property="og:image" content="{{ asset('img/index-fondo.jpg')}}" />
 
-        <link rel="shortcut icon" href="{{ asset('public/favicon.ico')}}" />
-        <link rel="apple-touch-icon" href="{{ asset('public/images/favicon.png')}}" />        
-        <link rel="stylesheet" href="{{ asset('public/public_components/css/bootstrap.min.css')}}">
-        <link rel="stylesheet" href="{{ asset('public/public_components/css/font-awesome.min.css')}}">
-        <link rel="stylesheet" href="{{ asset('public/public_components/search_inbox/css/default.css')}}">
-        <link rel="stylesheet" href="{{ asset('public/public_components/search_inbox/css/component.css')}}">
-        <link rel="stylesheet" href="{{ asset('public/public_components/css/letras.css')}}">
-        <link rel="stylesheet" href="{{ asset('public/public_components/css/animate.min.css')}}">
-        <link rel="stylesheet" type="text/css" href="{{ asset('public/public_components/components/owl-carousel/owl.carousel.css')}}" media="screen" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('public/public_components/components/owl-carousel/owl.transitions.css')}}" media="screen" />
+        <link rel="shortcut icon" href="{{ asset('favicon.ico')}}" />
+        <link rel="apple-touch-icon" href="{{ asset('images/favicon.png')}}" />        
+        <link rel="stylesheet" href="{{ asset('public_components/css/bootstrap.min.css')}}">
+        <link rel="stylesheet" href="{{ asset('public_components/css/font-awesome.min.css')}}">
+        <link rel="stylesheet" href="{{ asset('public_components/search_inbox/css/default.css')}}">
+        <link rel="stylesheet" href="{{ asset('public_components/search_inbox/css/component.css')}}">
+        <link rel="stylesheet" href="{{ asset('public_components/css/letras.css')}}">
+        <link rel="stylesheet" href="{{ asset('public_components/css/animate.min.css')}}">
+        <link rel="stylesheet" type="text/css" href="{{ asset('public_components/components/owl-carousel/owl.carousel.css')}}" media="screen" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('public_components/components/owl-carousel/owl.transitions.css')}}" media="screen" />
         <!-- Magnific Popup core CSS file -->
-        <link rel="stylesheet" href="{{ asset('public/public_components/components/magnific-popup/magnific-popup.css')}}"> 
-        <link rel="stylesheet" type="text/css" href="{{ asset('public/public_components/components/revolution_slider/css/settings.css')}}" media="screen" />
-        <link rel="stylesheet" type="text/css" href="{{ asset('public/public_components/components/revolution_slider/css/style.css')}}" media="screen" />
+        <link rel="stylesheet" href="{{ asset('public_components/components/magnific-popup/magnific-popup.css')}}"> 
+        <link rel="stylesheet" type="text/css" href="{{ asset('public_components/components/revolution_slider/css/settings.css')}}" media="screen" />
+        <link rel="stylesheet" type="text/css" href="{{ asset('public_components/components/revolution_slider/css/style.css')}}" media="screen" />
 
         <!-- Main Style -->
-        <link id="main-style" rel="stylesheet" href="{{ asset('public/public_components/css/style.css')}}">
+        <link id="main-style" rel="stylesheet" href="{{ asset('public_components/css/style.css')}}">
 
         <!-- Updated Styles -->
-        <link rel="stylesheet" href="{{ asset('public/public_components/css/updates.css')}}">
+        <link rel="stylesheet" href="{{ asset('public_components/css/updates.css')}}">
 
         <!-- Custom Styles -->
-        <link rel="stylesheet" href="{{ asset('public/public_components/css/custom.css')}}">
+        <link rel="stylesheet" href="{{ asset('public_components/css/custom.css')}}">
 
         <!-- Responsive Styles -->
-        <link rel="stylesheet" href="{{ asset('public/public_components/css/responsive.css')}}">
+        <link rel="stylesheet" href="{{ asset('public_components/css/responsive.css')}}">
 
         <!-- CSS for IE -->
         <!--[if lte IE 9]>
@@ -109,7 +109,7 @@
                 display:none;
                 text-indent:-9999px;
 
-                background: url("../public/img/top.png") no-repeat;
+                background: url("../img/top.png") no-repeat;
             }
             .scrollup{
                 width:40px;
@@ -121,7 +121,7 @@
                 display:none;
                 text-indent:-9999px;
                 z-index: 10000;
-                background: url("../public/img/top.png") no-repeat;
+                background: url("../img/top.png") no-repeat;
             }
 
             #search-box {
@@ -195,13 +195,13 @@
                                 <div style="background-color: transparent; 
                                      background-repeat: no-repeat; 
                                      
-                                     background-image: url('{{ asset('public/img/index-fondo.jpg')}}'); 
+                                     background-image: url('{{ asset('img/index-fondo.jpg')}}'); 
                                      background-size: cover; 
                                      background-position: center center;
                                      width: 100%; height: 100%; opacity: 1; 
                                      visibility: inherit;" 
-                                     data-src="{{ asset('public/images/backgrounds/gradient.png')}}"
-                                     src="{{ asset('public/img/index-rodelas.png')}}" 
+                                     data-src="{{ asset('images/backgrounds/gradient.png')}}"
+                                     src="{{ asset('img/index-rodelas.png')}}" 
                                      data-bgrepeat="no-repeat" 
                                      data-bgposition="center center" data-bgfit="cover" 
                                      class="tp-bgimg defaultimg">
@@ -215,13 +215,13 @@
                            <div style="background-color: transparent; 
                                background-repeat: no-repeat; 
                                 
-                                background-image: url('{{ asset('public/img/hero.jpg')}}'); 
+                                background-image: url('{{ asset('img/hero.jpg')}}'); 
                                 background-size: cover; 
                                 background-position: center center;
                                 width: 100%; height: 100%; opacity: 1; 
                                 visibility: inherit;" 
-                                data-src="{{ asset('public/images/backgrounds/gradient.png')}}"
-                                src="{{ asset('public/img/index-rodelas.png')}}" 
+                                data-src="{{ asset('images/backgrounds/gradient.png')}}"
+                                src="{{ asset('img/index-rodelas.png')}}" 
                                 data-bgrepeat="no-repeat" 
                                 data-bgposition="center center" data-bgfit="cover" 
                                 class="tp-bgimg defaultimg">
@@ -277,7 +277,7 @@
                                  data-splitin="none" data-easing="Power3.easeInOut"
                                  data-start="1000" data-speed="300" data-voffset="-79" 
                                  data-y="35" data-x="-280" class="tp-caption sfl fadeout start">
-                                  <img alt="" src="{{ asset('public/img/index-logo.png')}}" >
+                                  <img alt="" src="{{ asset('img/index-logo.png')}}" >
                                 <!--<h2  style="font-size: 53px;" ><b>iWaNaTrip</b></h2>-->
 
                             </div>1
@@ -312,9 +312,9 @@
             $titulo = "Ecuador";
             ?>
 
-            @if($location->city!="")
+            @if($location!="")
                 <?php
-                $titulo = $location->city;
+                $titulo = "Ecuador";
                 ?>
             @else
                 $titulo="Ecuador";
@@ -381,7 +381,7 @@
                                         ">
                                         <div class="product-image">
                                             <a href="{!!asset('/tokenDz$rip')!!}/4"  onclick="$('.container').LoadingOverlay('show');">
-                                                <img src="{{ asset('public/img/register/')}}/4.png" alt="iwanatrip">
+                                                <img src="{{ asset('img/register/')}}/4.png" alt="iwanatrip">
                                             </a>
                                         </div>
                                         <div class="product-content">
@@ -405,7 +405,7 @@
                                             <a href="{!!asset('/tokenDz$rip')!!}/1"  onclick="$('.container').LoadingOverlay('show');
                                                     $('.container').LoadingOverlay('hide', true);">
 
-                                                <img src="{{ asset('public/img/register/')}}/1.png" alt="iwanatrip">
+                                                <img src="{{ asset('img/register/')}}/1.png" alt="iwanatrip">
                                             </a>
                                         </div>
 
@@ -432,7 +432,7 @@
                                             <a href="{!!asset('/tokenDz$rip')!!}/2"  onclick="$('.container').LoadingOverlay('show');
                                                     $('.container').LoadingOverlay('hide', true);">
 
-                                                <img src="{{ asset('public/img/register/')}}/2.png" alt="iwanatrip">
+                                                <img src="{{ asset('img/register/')}}/2.png" alt="iwanatrip">
                                             </a>
                                         </div>
 
@@ -463,7 +463,7 @@
                                     <div class="icon-box style-side-2 animated box" data-animation-type="fadeInUp" data-animation-delay="0">
                                         
                                            <a href="{!!asset('/tokenDz$rip')!!}/4"  onclick="$('.container').LoadingOverlay('show');">
-                                                <img src="{{ asset('public/img/iconos')}}/visit.jpg" alt="iwanatrip">
+                                                <img src="{{ asset('img/iconos')}}/visit.jpg" alt="iwanatrip">
                                             </a>
                                         
                                         
@@ -481,7 +481,7 @@
                                         
                                         
                                         <a href="{!!asset('/tokenDz$rip')!!}/1"  onclick="$('.container').LoadingOverlay('show');">
-                                                <img src="{{ asset('public/img/iconos')}}/eat.jpg" alt="iwanatrip">
+                                                <img src="{{ asset('img/iconos')}}/eat.jpg" alt="iwanatrip">
                                             </a>
                                         
                                         <div class="">
@@ -498,7 +498,7 @@
                                         
                                         
                                         <a href="{!!asset('/tokenDz$rip')!!}/2"  onclick="$('.container').LoadingOverlay('show');">
-                                                <img src="{{ asset('public/img/iconos')}}/sleep.jpg" alt="iwanatrip">
+                                                <img src="{{ asset('img/iconos')}}/sleep.jpg" alt="iwanatrip">
                                             </a>
                                         
                                         <div class="">
@@ -833,7 +833,7 @@
                                 <div class="iso-container iso-col-4 style-fancy">
                                     <div class="shortcode-banner style-animated iso-item  filter-all " >
                                         <article class="post">
-                                            <figure ><img src="{{ asset('public/img/costa.jpg')}}" alt=""></figure>
+                                            <figure ><img src="{{ asset('img/costa.jpg')}}" alt=""></figure>
                                             @if(session('device')!='mobile')
                                             <div class="shortcode-banner-inside" style=" width: 108%;">
                                                 @else
@@ -852,7 +852,7 @@
                                     </div>
                                     <div class="shortcode-banner style-animated iso-item  filter-all " >
                                         <article class="post">
-                                            <figure ><img src="{{ asset('public/img/sierra.jpg')}}" alt=""></figure>
+                                            <figure ><img src="{{ asset('img/sierra.jpg')}}" alt=""></figure>
                                             @if(session('device')!='mobile')
                                             <div class="shortcode-banner-inside" style=" width: 108%;">
                                                 @else
@@ -871,7 +871,7 @@
                                     </div>
                                     <div class="shortcode-banner style-animated iso-item  filter-all " >
                                         <article class="post">
-                                            <figure ><img src="{{ asset('public/img/oriente.jpg')}}" alt=""></figure>
+                                            <figure ><img src="{{ asset('img/oriente.jpg')}}" alt=""></figure>
                                             @if(session('device')!='mobile')
                                             <div class="shortcode-banner-inside" style=" width: 108%;">
                                                 @else
@@ -890,7 +890,7 @@
                                     </div>
                                     <div class="shortcode-banner style-animated iso-item  filter-all " >
                                         <article class="post">
-                                            <figure ><img src="{{ asset('public/img/galapagos.jpg')}}" alt=""></figure>
+                                            <figure ><img src="{{ asset('img/galapagos.jpg')}}" alt=""></figure>
                                             @if(session('device')!='mobile')
                                             <div class="shortcode-banner-inside" style=" width: 108%;">
                                                 @else
@@ -960,45 +960,45 @@
                     </footer>
                     </div>
                     <!-- Javascript -->
-                    {!! HTML::script('public/js/jquery.js') !!}
-                    {!!HTML::script('public/js/js_public/Compartido.js') !!}
-                    {!!HTML::script('public/js/loadingScreen/loadingoverlay.min.js') !!}
-                    {!!HTML::script('public/js/jquery.autocomplet.js') !!}
+                    {!! HTML::script('js/jquery.js') !!}
+                    {!!HTML::script('js/js_Compartido.js') !!}
+                    {!!HTML::script('js/loadingScreen/loadingoverlay.min.js') !!}
+                    {!!HTML::script('js/jquery.autocomplet.js') !!}
 
-                    <script type="text/javascript" src="{{ asset('public/public_components/js/jquery-2.1.3.min.js')}}"></script>
-                    <script type="text/javascript" src="{{ asset('public/public_components/js/jquery.noconflict.js')}}"></script>
-                    <script type="text/javascript" src="{{ asset('public/public_components/js/modernizr.2.8.3.min.js')}}"></script>
-                    <script type="text/javascript" src="{{ asset('public/public_components/js/jquery-migrate-1.2.1.min.js')}}"></script>
-                    <script type="text/javascript" src="{{ asset('public/public_components/js/jquery-ui.1.11.2.min.js')}}"></script>
+                    <script type="text/javascript" src="{{ asset('public_components/js/jquery-2.1.3.min.js')}}"></script>
+                    <script type="text/javascript" src="{{ asset('public_components/js/jquery.noconflict.js')}}"></script>
+                    <script type="text/javascript" src="{{ asset('public_components/js/modernizr.2.8.3.min.js')}}"></script>
+                    <script type="text/javascript" src="{{ asset('public_components/js/jquery-migrate-1.2.1.min.js')}}"></script>
+                    <script type="text/javascript" src="{{ asset('public_components/js/jquery-ui.1.11.2.min.js')}}"></script>
 
                     <!-- Twitter Bootstrap -->
-                    <script type="text/javascript" src="{{ asset('public/public_components/js/bootstrap.min.js')}}"></script>
+                    <script type="text/javascript" src="{{ asset('public_components/js/bootstrap.min.js')}}"></script>
 
                     <!-- Magnific Popup core JS file -->
-                    <script type="text/javascript" src="{{ asset('public/public_components/components/magnific-popup/jquery.magnific-popup.min.js')}}"></script> 
+                    <script type="text/javascript" src="{{ asset('public_components/components/magnific-popup/jquery.magnific-popup.min.js')}}"></script> 
 
                     <!-- parallax -->
-                    <script type="text/javascript" src="{{ asset('public/public_components/js/jquery.stellar.min.js')}}"></script>
+                    <script type="text/javascript" src="{{ asset('public_components/js/jquery.stellar.min.js')}}"></script>
 
                     <!-- waypoint -->
-                    <script type="text/javascript" src="{{ asset('public/public_components/js/waypoints.min.js')}}"></script>
+                    <script type="text/javascript" src="{{ asset('public_components/js/waypoints.min.js')}}"></script>
 
                     <!-- Owl Carousel -->
-                    <script type="text/javascript" src="{{ asset('public/public_components/components/owl-carousel/owl.carousel.min.js')}}"></script>
+                    <script type="text/javascript" src="{{ asset('public_components/components/owl-carousel/owl.carousel.min.js')}}"></script>
 
                     <!-- load revolution slider scripts -->
-                    <script type="text/javascript" src="{{ asset('public/public_components/components/revolution_slider/js/jquery.themepunch.tools.min.js')}}"></script>
-                    <script type="text/javascript" src="{{ asset('public/public_components/components/revolution_slider/js/jquery.themepunch.revolution.min.js')}}"></script>
+                    <script type="text/javascript" src="{{ asset('public_components/components/revolution_slider/js/jquery.themepunch.tools.min.js')}}"></script>
+                    <script type="text/javascript" src="{{ asset('public_components/components/revolution_slider/js/jquery.themepunch.revolution.min.js')}}"></script>
 
                     <!-- plugins -->
-                    <script type="text/javascript" src="{{ asset('public/public_components/js/jquery.plugins.js')}}"></script>
+                    <script type="text/javascript" src="{{ asset('public_components/js/jquery.plugins.js')}}"></script>
 
                     <!-- load page Javascript -->
-                    <script type="text/javascript" src="{{ asset('public/public_components/js/main.js')}}"></script>
+                    <script type="text/javascript" src="{{ asset('public_components/js/main.js')}}"></script>
 
-                    <script type="text/javascript" src="{{ asset('public/public_components/js/revolution-slider.js')}}"></script>
+                    <script type="text/javascript" src="{{ asset('public_components/js/revolution-slider.js')}}"></script>
 
-                    <script type="text/javascript" src="{{ asset('public/public_components/js/lugares_ecuador.js')}}"></script>
+                    <script type="text/javascript" src="{{ asset('public_components/js/lugares_ecuador.js')}}"></script>
                     <script>
                                                             $(document).ready(function () {
                                                                 var pagina = 1;
