@@ -1,0 +1,6 @@
+
+RewriteEngine on
+RewriteCond %{HTTP_HOST} ^booking\.iwanatrip\.com$ [OR]
+RewriteCond %{HTTP_HOST} ^www\.booking\.iwanatrip\.com$
+RewriteRule ^/?$ "https\:\/\/iwanatrip\.com" [R=301,L]
+
