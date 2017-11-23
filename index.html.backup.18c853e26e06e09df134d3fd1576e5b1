@@ -1,0 +1,502 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Iguana Trip</title>
+<style type="text/css">
+<!--
+body {
+	margin-top: 0px;
+	margin-left: 0px;
+	margin-right: 0px;
+	margin-bottom: 0px;
+}
+#principal{
+	width:100%;
+	position: absolute;
+	left:0px;
+}
+a {
+	font-family: Trebuchet MS;
+}
+#header{
+	padding:0px;
+	width:100%;
+	background-image:url(img/pag-1-imag1.png);
+	background-repeat:no-repeat;
+	height:372px;
+	float:left;
+}
+#logoPrincipal{
+	float:left;
+	padding-top:46px;
+	height:300px;
+	margin-left:230px;
+}
+#contenedorSearch{
+	float:left;
+	padding-top:180px;
+	height:57px;
+	margin-left:50px;
+	width:559px;
+}
+#daytrip{
+	float:left;
+	width:135px;
+	height:57px;
+}
+#formularioDayTrip{
+	float:left;
+	width:311px;
+	height:57px;
+	background-color:#F15B41;
+}
+#contenedorSearch-bottom{
+	width:112px;
+	height:57px;
+	float:left;
+}
+#buscadorGaleria{
+	clear:both;
+}
+#logoBuscador{
+	float:left;
+}
+#buscador{
+	float:left;
+}
+#BotonBuscador{
+	float:left;
+}
+#menu{
+	background-image: url("img/imagen-5.png");
+	clear:both;
+	height:37px;
+	float:left;
+	margin-top:372px;
+	width:100%;
+}
+#seleccionitem{
+	padding-left:233px;
+	padding-top:0px;
+}
+#seleccionitem li{
+	display:inline;
+	color:#FFF;
+	border-right:1px #FFF solid;
+}
+#seleccionitem li a{
+	font-family: Arial;
+	font-size:12px;
+	font-weight:bold;
+	text-decoration: none;
+	color:#FFF;
+	padding-left:38px;
+	padding-right:38px;
+	padding-top:0px;
+	padding-bottom:8px;
+}
+#seleccionitem li a:hover {
+	color: #F15B41;
+	background-color:#FFF;
+}
+#miniguides{
+	clear:both;
+	background-color:#DCDDDE;
+	margin-top:10px;
+	padding-bottom:10px;
+	float:left;
+	width:100%;
+}
+#titleminiguides{
+	color:#007E7F;
+	padding-left:285px;
+	clear:both;
+	font-family: Arial;
+	font-weight:bold;
+	padding-top:5px;
+	font-size:12px;
+	margin-bottom:10px;
+}
+#guides_1{
+	border-right:1px #000 solid;
+	float:left;
+	padding-left:233px;
+	padding-right:10px;
+	width:198px;
+}
+#guides_2{
+	border-right:1px #000 solid;
+	float:left;
+	padding-right:10px;
+	padding-left:10px;
+	width:198px;
+}
+#guides_3{
+	border-right:1px #000 solid;
+	float:left;
+	padding-right:10px;
+	padding-left:10px;
+	width:198px;
+}
+#guides_4{
+	float:left;
+	padding-right:10px;
+	padding-left:10px;
+	width:224px;
+}
+#propaganda_1{
+	width:198px;
+	padding:0px;
+}
+#descripcion_1{
+	width:198px;
+	text-align:center;
+}
+.titulo{
+	color:#007E7F;
+	font-weight:bold;
+	font-family: Arial;
+	font-size:12px;
+}
+.descripcion{
+	color:#000;
+	font-weight:bold;
+	font-family: Arial;
+	font-size:11px;
+}
+#propaganda_2{
+	width:198px;
+}
+#descripcion_2{
+	width:198px;
+	text-align:center;	
+}
+#propaganda_3{
+	width:198px;
+}
+#descripcion_3{
+	width:198px;
+	text-align:center;
+}
+#propaganda_4{
+	width:198px;
+}
+#descripcion_4{
+	width:198px;
+	text-align:center;
+}
+#relleno{
+	clear:both;
+}
+#noticias{
+	clear:both;
+}
+#noticiashead{
+	clear:both;
+	background-image: url("img/imagen-10.png");
+	margin-left:233px;
+	height:14px;
+	width:895px;
+}
+#noticias_1{
+	float:left;
+	width:325px;
+	margin-left:233px;
+}
+#noticias_2{
+	float:left;
+	width:264px;
+	padding-left:20px;
+	padding-right:20px;
+}
+#noticias_3{
+	float:left;
+	width:264px;
+	border-left:1px #000 solid;
+	padding-left:10px;
+}
+#contenedorsurprice{
+	background-image: url("img/imagen-12.png");
+	width:253px;
+	height:223px;
+}
+#micelaneas{
+	clear:both;
+	margin-bottom:10px;
+
+}
+#divisor{
+	margin-left:233px;
+	border-bottom:1px #000 solid;
+	width:895px;
+	margin-bottom:15px;
+}
+#micelaneasizq{
+	margin-left:233px;
+	float:left;
+	width:345px;
+	border-right:1px #000 solid;
+	padding-right:10px;
+}
+#micelaneascenter{
+	float:left;
+	width:290px;
+	border-right:1px #000 solid;	
+	padding-left:10px;
+	padding-right:10px;
+}
+#micelaneasder{
+	float:left;
+	width:227px;
+}
+#micelaneas-titulo{
+	color:#007E7F;
+	font-weight:bold;
+	font-family: Arial;
+	font-size:12px;
+	margin-bottom: 5px;
+}
+#micelaneas-titulo-1{
+	color:#007E7F;
+	font-weight:bold;
+	font-family: Arial;
+	font-size:12px;
+	margin-bottom: 5px;
+	padding-left:10px;
+}
+
+#micelaneasizq-1{
+	border-right:1px #000 solid;
+	padding-right:10px;
+	width:155px;
+	float:left;
+}
+#micelaneasizq-2{
+	float:left;
+	width:155px;
+	padding-left:10px;
+}
+.micelaneas-titulo-noticia{
+	color:#F4806C;
+	font-weight:bold;
+	font-family: Arial;
+	font-size:11px;
+}
+.micelaneas-descripcion-noticia{
+	color:#000;
+	font-weight:bold;
+	font-family: Arial;
+	font-size:10px;
+}
+.micelaneas-pie-noticia{
+	color:#999;
+	font-weight:bold;
+	font-family: Arial;
+	font-size:9px;
+}
+.micelaneas-email-contenido{
+	color:#000;
+	font-weight:bold;
+	font-family: Arial;
+	font-size:10px;
+}
+#micelaneas-email{
+	border-bottom:1px #000 solid;
+	float:left;
+	padding-left:10px;
+
+}
+#micelaneas-ofertas{
+	padding-top:10px;
+	float:left;
+	padding-left:10px;
+}
+#ofertas{
+    
+    padding-left: 10px;
+    margin-left: 10px;
+	font-weight:bold;
+	font-family: Arial;
+	font-size:10px;
+
+
+}
+#ofertas li{
+/*	list-style-image: url('img/imagen-22.png');*/
+    list-style-type:none;
+	background-image: url('img/imagen-22.png');
+	background-repeat: no-repeat;
+	background-position: left center;
+    padding-left: 16px;
+	padding-bottom:10px;
+	margin-bottom:10px;
+	border-bottom:1px #000 solid;
+}
+#pie{
+	clear:both;
+	background-image: url("img/imagen-5.png");
+	height:20px;
+}
+#seleccionitem-1{
+	padding-left:233px;
+	padding-top:0px;
+}
+#seleccionitem-1 li{
+	display:inline;
+	color:#FFF;
+	border-right:1px #FFF solid;
+}
+#seleccionitem-1 li a{
+	font-family: Arial;
+	font-size:10px;
+	font-weight:bold;
+	text-decoration: none;
+	color:#FFF;
+	padding-left:38px;
+	padding-right:38px;
+	padding-top:4px;
+	padding-bottom:1px;
+}
+#seleccionitem-1 li a:hover {
+	color: #F15B41;
+	background-color:#FFF;
+}
+
+-->
+</style>
+</head>
+
+<body>
+<div id="principal">
+  <div id="header">
+  	<div id="logoPrincipal">
+  		<img src="img/logo.png" width="220" height="281" alt="iguana trip" />
+    </div>
+    <div id="contenedorSearch">
+    	<div id="daytrip"><img src="img/imagen-2.png" width="135" height="57" alt="daytrip" /></div>
+        <div id="formularioDayTrip">
+        	<form method="post">
+            	<table width="100%" border="0" cellspacing="0" cellpadding="0">
+                  <tr>
+                    <td style="color:#FFF;font-family:Arial, Helvetica, sans-serif;font-weight:bold;font-size:14px">¿When your next trip?</td>
+                  </tr>
+                  <tr>
+                    <td><input name="txtSearch" type="text" style="background-color:#F66;width:250px" />
+                    <img src="img/imagen-21.png" width="19" height="17" alt="yyiiiiiii" /></td>
+                  </tr>
+                </table>
+            </form>
+        </div>
+        <div id="contenedorSearch-bottom"><img src="img/imagen-4.png" width="112" height="57" alt="qweweq" /></div>
+    </div>
+  <!--
+    <div id="contenedorGaleria">    
+        <div id="galeria">
+          <img src="img/imagen-1.png" width="558" height="292" alt="imagenes de galeria" />
+        </div>
+	  <div id="buscadorGaleria">
+            <div id="logoBuscador">
+  		  		<img src="img/imagen-2.png" width="135" height="57" alt="logo buscador" /></div>
+        	<div id="buscador"><img src="img/imagen-3.png" width="311" height="57" alt="buscador" /></div>
+        	<div id="BotonBuscador"><img src="img/imagen-4.png" width="112" height="57" alt="buscar" /></div>
+   	  </div>
+      -->
+    </div>
+  </div>
+  <div id="menu">
+  	<ul id="seleccionitem">
+    	<li><a href=”#”>Home</a></li>
+        <li><a href=”#”>Gallery</a></li>
+        <li><a href=”#”>Contact</a></li>
+        <li><a href=”#”>Login</a></li>
+    </ul>
+  </div>
+  <div id="miniguides">
+  	<div id="titleminiguides">Mini Guides</div>
+    <div id="guides_1">
+    	<div id="propaganda_1"><img src="img/imagen-6.png" width="198" height="198" alt="costa" /></div>
+        <div id="descripcion_1"><p class="titulo">Costa</p><p class="descripcion">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer risus massa, tincidunt non dapibus a, interdum ullamcorper metus. Mauris quis augue efficitur, blandit libero sed, dapibus quam. In non sem nec enim scelerisque feugiat in sit amet risus. Quisque vel tincidunt tortor. Suspendisse cursus purus orci, eget finibus nunc aliquam eget</p></div>	
+    </div>
+    <div id="guides_2">
+    	<div id="propaganda_2"><img src="img/imagen-7.png" width="198" height="198" alt="sierra" /></div>
+        <div id="descripcion_2"><p class="titulo">Sierra</p><p class="descripcion">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer risus massa, tincidunt non dapibus a, interdum ullamcorper metus. Mauris quis augue efficitur, blandit libero sed, dapibus quam. In non sem nec enim scelerisque feugiat in sit amet risus. Quisque vel tincidunt tortor. Suspendisse cursus purus orci, eget finibus nunc aliquam eget</p></div>	
+	</div>
+    <div id="guides_3">
+    	<div id="propaganda_3"><img src="img/imagen-8.png" width="198" height="198" alt="oriente" /></div>
+        <div id="descripcion_3"><p class="titulo">Oriente</p><p class="descripcion">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer risus massa, tincidunt non dapibus a, interdum ullamcorper metus. Mauris quis augue efficitur, blandit libero sed, dapibus quam. In non sem nec enim scelerisque feugiat in sit amet risus. Quisque vel tincidunt tortor. Suspendisse cursus purus orci, eget finibus nunc aliquam eget</p></div>	
+    </div>
+    <div id="guides_4">
+    	<div id="propaganda_4"><img src="img/imagen-9.png" width="198" height="198" alt="galapagos" /></div>
+        <div id="descripcion_4"><p class="titulo">Galapagos</p><p class="descripcion">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer risus massa, tincidunt non dapibus a, interdum ullamcorper metus. Mauris quis augue efficitur, blandit libero sed, dapibus quam. In non sem nec enim scelerisque feugiat in sit amet risus. Quisque vel tincidunt tortor. Suspendisse cursus purus orci, eget finibus nunc aliquam eget</p></div>	
+    </div>
+	<div id="relleno"></div>
+  </div>
+  <div id="noticias">
+	<div id="noticiashead"></div>
+    <div id="noticias_1">
+        <p><img src="img/imagen-11.png" width="325" height="268" alt="mapa" /></p>
+    </div>
+    <div id="noticias_2"><p class="titulo">Titulo 1</p><p class="descripcion">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer risus massa, tincidunt non dapibus a, interdum ullamcorper metus. Mauris quis augue efficitur, blandit libero sed, dapibus quam. In non sem nec enim scelerisque feugiat in sit amet risus. Quisque vel tincidunt tortor. Suspendisse cursus purus orci, eget finibus nunc aliquam eget</p></div>
+    <div id="noticias_3"><p class="titulo">Surprise</p>
+    	<div id="contenedorsurprice"><img src="img/imagen-13.png" width="137" height="122" alt="imagen2" />Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer risus massa, tincidunt non dapibus a, interdum ullamcorper metus. Mauris quis augue efficitur, blandit libero sed, dapibus quam.</div> 
+    </div>  
+  </div>
+  <div id="micelaneas">
+  	<div id="divisor"></div>
+    <div id="micelaneasizq">
+    	<div id="micelaneas-titulo">Top destination</div>
+        <div id="micelaneasizq-1">
+          <img src="img/imagen-14.png" width="155" height="144" alt="tren" />
+          <p class="micelaneas-titulo-noticia">Destination 1</p>
+          <p class="micelaneas-descripcion-noticia">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer risus massa, tincidunt non dapibus a, interdum ullamcorper metus.</p>
+          <p class="micelaneas-pie-noticia"><img src="img/imagen-20.png" width="73" height="20" alt="imagen" />&nbsp;&nbsp;&nbsp;Sep 16, 2015</p>
+        </div>
+        <div id="micelaneasizq-2"><img src="img/imagen-15.png" width="155" height="144" alt="comida" />
+          <p class="micelaneas-titulo-noticia">Destination 2</p>
+          <p class="micelaneas-descripcion-noticia">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer risus massa, tincidunt non dapibus a, interdum ullamcorper metus.</p>
+          <p class="micelaneas-pie-noticia"><img src="img/imagen-20.png" width="73" height="20" alt="imagen" />&nbsp;&nbsp;&nbsp;Sep 16, 2015</p>        </div>
+    </div>
+    <div id="micelaneascenter">
+    	<div id="micelaneas-titulo">Gallery</div>
+        <table width="290" border="0" cellspacing="5">
+  <tr>
+    <td><img src="img/imagen-16.png" width="121" height="115" alt="foca" /></td>
+    <td><img src="img/imagen-17.png" width="121" height="115" alt="rio" /></td>
+  </tr>
+  <tr>
+    <td><img src="img/imagen-18.png" width="121" height="115" alt="plato" /></td>
+    <td><img src="img/imagen-19.png" width="121" height="115" alt="iglesia" /></td>
+  </tr>
+</table>
+
+    </div>
+    <div id="micelaneasder">
+    	<div id="micelaneas-titulo-1">Day trip diary</div>
+        <div id="micelaneas-email">
+        	<p class="micelaneas-email-contenido">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer risus massa, tincidunt non dapibus a, interdum ullamcorper metus.<form action="#" method="post"><input name="txtSearch" type="text" />
+        	  <img src="img/imagen-21.png" width="19" height="17" alt="mail" />
+        	</form></p>
+        </div>
+        <div id="micelaneas-ofertas">
+        	<div id="micelaneas-titulo">Ofertas</div>
+            <ul id="ofertas">
+            	<li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer risus massa, tincidunt non dapibus a, interdum ullamcorper metus.</li>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer risus massa, tincidunt non dapibus a, interdum ullamcorper metus.</li>
+                <li>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer risus massa, tincidunt non dapibus a, interdum ullamcorper metus.</li>
+            </ul>
+        </div>        
+    </div>
+    <div id="relleno"></div>
+  </div>
+  <div id="pie">
+  	<ul id="seleccionitem-1">
+    	<li><a href=”#”>Home</a></li>
+        <li><a href=”#”>Gallery</a></li>
+        <li><a href=”#”>Contact</a></li>
+        <li><a href=”#”>Login</a></li>
+    </ul>
+  </div>
+</div>
+</body>
+</html>
