@@ -961,7 +961,7 @@
                     </div>
                     <!-- Javascript -->
                     {!! HTML::script('js/jquery.js') !!}
-                    {!!HTML::script('js/js_Compartido.js') !!}
+                    {!!HTML::script('js/js_public/Compartido.js') !!}
                     {!!HTML::script('js/loadingScreen/loadingoverlay.min.js') !!}
                     {!!HTML::script('js/jquery.autocomplet.js') !!}
 

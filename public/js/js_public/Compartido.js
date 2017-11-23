@@ -193,6 +193,7 @@ function masonryBlocks($cont,$item) {
 //Javascript para cargar las imagenes via ajax
 function GetDataAjaxTopPlaces(url) {
     
+   
     
     
     $.ajax({
@@ -384,7 +385,7 @@ function GetDataAjaxTopPlacesHome(url) {
         success: function (data) {
             window.current_page=current_page+1;
             
-            //$(".cercanos").append(data.cercanos);
+            $(".cercanos").append(data.cercanos);
            // $(".cercanos").LoadingOverlay("hide", true);
 
 
