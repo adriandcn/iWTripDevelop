@@ -1,0 +1,19 @@
+﻿h1,h2 {
+    color:#EE620A;
+}
+
+.ui-btn-icon-notext.ui-corner-all {
+    -webkit-border-radius: .3125em;
+    border-radius: .3125em;
+}
+.ui-title {
+    color:#fff;
+}
+
+.mc-top-margin-1-5 {
+    margin-top:1.5em;
+}
+h2.mc-text-danger,
+h3.mc-text-danger  {
+    color:red;
+}
