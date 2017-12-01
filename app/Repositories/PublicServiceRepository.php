@@ -98,6 +98,19 @@ class PublicServiceRepository extends BaseRepository {
 
         return $imagenesF;
     }
+    
+       //Obtiene los usuarios servicios para sitemap
+    public function getSitemapUsuariosServicio() {
+
+
+
+        $sitemapServicios = DB::table('usuario_servicios')
+                ->where('usuario_servicios.estado_servicio_usuario', '=',1)
+                ->where('usuario_servicios.estado_servicio', '=',1)
+                  ->select("usuario_servicios.*")
+                ->get();
+        return $sitemapServicios;
+    }
 
     public function storeNew($inputs) {
         $review = new $this->review;
@@ -112,57 +125,175 @@ class PublicServiceRepository extends BaseRepository {
         $this->save($review);
         return $review;
     }
+
     
     
-      //Obtiene los usuarios servicios para sitemap
-    public function getSitemapUsuariosServicio() {
+    
+    
+    //Obtiene otros trips excepto el que se muestra
+    public function getotherTrips($id) {
 
-
-
-        $sitemapServicios = DB::table('usuario_servicios')
-                ->where('usuario_servicios.estado_servicio_usuario', '=',1)
-                ->where('usuario_servicios.estado_servicio', '=',1)
-                  ->select("usuario_servicios.*")
-                ->get();
-        return $sitemapServicios;
-    }
-
-    public function getDetalleporPArroquia($idParroquia, $id_catalogo) {
-        $servicioCatalogo = DB::table('usuario_servicios')
-                ->where('id_catalogo_servicio', '=', $id_catalogo)
-                ->where('estado_servicio', '=', '1')
-                ->where('usuario_servicios.id_parroquia', '=', $idParroquia)
+        $moreTrips = DB::table('usuario_servicios')
+                ->where('id_catalogo_servicio', '=', 11)
+                ->where('id', '!=', $id)
+                ->where('estado_servicio', '=', 1)
+                ->where('estado_servicio_usuario', '=', 1)
+                
                 ->select('usuario_servicios.*')
-                ->orderBy('usuario_servicios.prioridad')
-                ->orderBy('usuario_servicios.num_visitas')
                 ->get();
-        return $servicioCatalogo;
+
+
+        return $moreTrips;
+    }
+    
+    
+        //*************************************************************************//
+    //                          NUEVAS FUNCIONES                               //  
+    //*************************************************************************//
+    
+    public function getErrores() {
+
+        $errores = DB::table('errores')->get();
+        return $errores;
+    }
+    
+      public function guardarError($id_usuario_servicio, $id_error, $ip, $dispositivo){
+        $fecha = date("Y-m-d h:i:s");
+        $nuevoReportado = DB::table('reportados')->insert(['id_usuario_servicio' => $id_usuario_servicio, 
+                                                            'tipo_error' => $id_error, 'estado' => 1,
+                                                             'ip_envio_error' => $ip, 'dispositivo' => $dispositivo,   
+                                                            'created_at' => $fecha, 'updated_at' => $fecha ]);
+        return $nuevoReportado;
     }
 
-    public function getDetalleporCanton($idCanton, $id_catalogo) {
-        $servicioCatalogo = DB::table('usuario_servicios')
-                ->where('id_catalogo_servicio', '=', $id_catalogo)
-                ->where('estado_servicio', '=', '1')
-                ->where('usuario_servicios.id_canton', '=', $idCanton)
-                ->select('usuario_servicios.*')
-                ->orderBy('usuario_servicios.prioridad')
-                ->orderBy('usuario_servicios.num_visitas')
-                ->get();
-        return $servicioCatalogo;
+    public function guardarErrorContacto($id_usuario_servicio, $id_error,$nombre, $email,$telefono,$ip, $dispositivo){
+        $fecha = date("Y-m-d h:i:s");
+        $nuevoReportado1 = DB::table('reportados')->insert(['id_usuario_servicio' => $id_usuario_servicio, 
+                                                            'tipo_error' => $id_error, 'estado' => 1,
+                                                            'email' => $email, 'nombre' => $nombre,
+                                                            'telefono' => $telefono,
+                                                            'ip_envio_error' => $ip, 'dispositivo' => $dispositivo,     
+                                                            'created_at' => $fecha, 'updated_at' => $fecha ]);
+        return $nuevoReportado1;
+    }
+    
+        public function guardarContactos($nombre, $apellido, $correo, $mensaje){
+        $fecha = date("Y-m-d h:i:s");
+        $nuevoContactanos = DB::table('contactanos')->insert(['correo_cliente' => $correo, 
+                                                            'estado_atendido' => 0, 'nombre_cliente' => $nombre,
+                                                            'apellido_cliente' => $apellido, 'mensaje' => $mensaje,
+                                                            'created_at' => $fecha, 'updated_at' => $fecha ]);
+        return $nuevoContactanos;
     }
 
-    public function getDetalleporProvincia($idProvincia, $id_catalogo) {
-        $servicioCatalogo = DB::table('usuario_servicios')
-                ->where('id_catalogo_servicio', '=', $id_catalogo)
-                ->where('estado_servicio', '=', '1')
-                ->where('usuario_servicios.id_provincia', '=', $idProvincia)
-                ->select('usuario_servicios.*')
-                ->orderBy('usuario_servicios.prioridad')
-                ->orderBy('usuario_servicios.num_visitas')
-                ->get();
-        return $servicioCatalogo;
+public function getInfoAgrupamiento($id) {
+
+        $agrupamiento = DB::table('booking_abcalendar_agrupamiento')->where('id', '=', $id)->get();
+        return $agrupamiento;
     }
 
+    public function getCalendariosAgrupamiento($id,$id_usuario_servicio) {
+
+            $calendarInfo = DB::table('booking_abcalendar_calendars')
+                         ->join('booking_abcalendar_multi_lang','booking_abcalendar_calendars.id','=','booking_abcalendar_multi_lang.foreign_id')  
+                         ->select(DB::raw('booking_abcalendar_calendars.* , booking_abcalendar_multi_lang.content'))
+                         ->where('booking_abcalendar_multi_lang.model', '=', 'pjCalendar')
+                         ->where('booking_abcalendar_multi_lang.field','=','name')
+                         ->where('booking_abcalendar_calendars.id_usuario_servicio','=',$id_usuario_servicio)
+                         ->where('booking_abcalendar_calendars.id_agrupamiento','=',$id)
+                         ->get();
+
+        
+        return $calendarInfo;
+    } 
+
+    //Despliega los 3 primeros lugares para comer en la ruta
+    public function getTripToDo($id_atraccion, $idCatalogo) {
+
+         
+
+        $provincias = DB::table('usuario_servicios')
+                ->join('servicio_establecimiento_usuario', 'id_usuario_servicio', '=', 'usuario_servicios.id')
+                ->join('catalogo_servicio_establecimiento', 'servicio_establecimiento_usuario.id_servicio_est', '=', 'catalogo_servicio_establecimiento.id')
+                ->distinct()->select('catalogo_servicio_establecimiento.nombre_servicio_est')
+                ->where('servicio_establecimiento_usuario.id_usuario_servicio', '=', $id_atraccion)
+                //->where('estado_servicio', '=', 1)
+                ->where('estado_servicio_usuario', '=', 1)
+                ->where('estado_servicio_est', '=', 1)
+                ->get();
+
+        //Obtiene las provincias que cruza el itinerario
+        if ($provincias != null) {
+
+            $array = array();
+            $arrayservicio = array();
+            $aleatorias= array();
+
+            foreach ($provincias as $provincia) {
+
+                $ubicGeo = DB::table('ubicacion_geografica')
+                                ->where('ubicacion_geografica.nombre', '=', $provincia->nombre_servicio_est)
+                        ->where('ubicacion_geografica.idUbicacionGeograficaPadre', '=', 1)
+                                ->select('ubicacion_geografica.*')->first();
+
+                $array[] = $ubicGeo;
+            }
+
+            if(count($array)<=5)
+            $aleatorias=array_rand($array,count($array));
+            else
+                $aleatorias=array_rand($array,5);
+            
+              foreach ($aleatorias as $provincial) {
+        //print_r($array[$provincial]->id."--");
+                  if(isset($array[$provincial]->id)){
+                     $Servicios = DB::table('usuario_servicios')
+                         ->join('ubicacion_geografica', 'usuario_servicios.id_provincia', '=', 'ubicacion_geografica.id')
+                            ->where('estado_servicio_usuario', '=', '1')
+                            //->where('estado_servicio', '=', '1')
+                             ->where('usuario_servicios.id_provincia', '=', $array[$provincial]->id)
+                            ->where('usuario_servicios.id_catalogo_servicio', '=', $idCatalogo)
+                            ->select('usuario_servicios.id')
+                            ->orderBy('usuario_servicios.prioridad')
+                            ->orderBy('usuario_servicios.num_visitas')
+                            ->first();
+                     $arrayservicio[] = $Servicios;
+                  }
+                  
+            
+            
+            }
+            //print_r($arrayservicio);
+            
+            
+            $arrayServ = array();
+            if ($arrayservicio != null) {
+                 foreach ($arrayservicio as $servicio) {
+                   //  print_r($servicio->id." -- ");
+            if($servicio!=null){
+                $imagenes = DB::table('images')
+                        ->join('usuario_servicios', 'usuario_servicios.id', '=', 'images.id_usuario_servicio')
+                        ->join('ubicacion_geografica', 'usuario_servicios.id_provincia', '=', 'ubicacion_geografica.id')
+                        ->where('id_auxiliar', '=', $servicio->id)
+                        ->where('estado_fotografia', '=', '1')
+                        ->select('images.*','usuario_servicios.*','ubicacion_geografica.nombre as ubicacion')
+                        ->orderBy('usuario_servicios.prioridad')
+                        ->orderBy('usuario_servicios.num_visitas')
+                        ->orderBy('id_auxiliar', 'desc')
+                        ->first();
+                $arrayServ[] = $imagenes;
+}
+                 }
+                return $arrayServ;
+            }
+        } else {
+
+            return null;
+        }
+
+    }
+    
+    
     //Entrega el arreglo de los servicios más visitados por provincia
     public function getVisitadosProvincia($id_provincia) {
 
@@ -238,6 +369,196 @@ class PublicServiceRepository extends BaseRepository {
         return $ubicacion;
     }
 
+    
+    
+    //Entrega el arreglo de los servicios con imagenes para los Trips
+    public function getDetailsServiciosAtraccionTrips($catalogo_servicios, $page_now, $page_stoped, $pagination) {
+
+        $orderkey = "precio_desde";
+        $ordervalue = "asc";
+
+
+        $catalogo = null;
+        if ($catalogo_servicios != null) {
+            
+            $array = array();
+            foreach ($catalogo_servicios as $visitado) {
+                $catalogo = $visitado->id_catalogo_servicio;
+
+                $imagenes = DB::table('images')
+                        ->join('usuario_servicios', 'usuario_servicios.id', '=', 'images.id_usuario_servicio')
+                        ->where('id_usuario_servicio', '=', $visitado->id)
+                        ->where('estado_fotografia', '=', '1')
+                        ->where('usuario_servicios.estado_servicio', '=', '1')
+                        ->select('images.id')
+                        ->orderBy('id_auxiliar', 'desc')
+                        ->first();
+
+
+                if ($imagenes != null) {
+
+                    foreach ($imagenes as $imagen) {
+
+                        $array[] = $imagen;
+                    }
+                }
+            }
+            if ($page_now != null) {
+
+                $currentPage = ($page_now - $page_stoped);
+                // You can set this to any page you want to paginate to
+                // Make sure that you call the static method currentPageResolver()
+                // before querying users
+                Paginator::currentPageResolver(function () use ($currentPage) {
+                    return $currentPage;
+                });
+            }
+
+            $imagenesF = DB::table('images')
+                    ->join('usuario_servicios', 'usuario_servicios.id', '=', 'images.id_usuario_servicio')
+                    //->join('ubicacion_geografica', 'usuario_servicios.id_canton', '=', 'ubicacion_geografica.id')
+                    //->leftJoin('satisfechos_usuario_servicio', 'usuario_servicios.id', '=', 'satisfechos_usuario_servicio.id_usuario_servicio')
+                    ->whereIn('images.id', $array)
+                    ->where('estado_fotografia', '=', '1')
+                    ->where('usuario_servicios.estado_servicio', '=', '1')
+                   // ->where('usuario_servicios.id_catalogo_servicio', '=', $catalogo)
+                    ->select(array('usuario_servicios.id as id_usr_serv',  'usuario_servicios.*', 'images.*'))
+                    ->groupby('usuario_servicios.id')
+                    ->orderBy($orderkey, $ordervalue)
+                    ->paginate($pagination);
+        } else {
+            $imagenesF = DB::table('images')
+                    ->join('usuario_servicios', 'usuario_servicios.id', '=', 'images.id_usuario_servicio')
+                    //->join('ubicacion_geografica', 'usuario_servicios.id_canton', '=', 'ubicacion_geografica.id')
+                    //->leftJoin('satisfechos_usuario_servicio', 'usuario_servicios.id', '=', 'satisfechos_usuario_servicio.id_usuario_servicio')
+                    ->where('estado_fotografia', '=', '1')
+                    ->where('usuario_servicios.estado_servicio', '=', '1')
+                    //->where('usuario_servicios.id_catalogo_servicio', '=', $catalogo)
+                    ->select(array('usuario_servicios.id as id_usr_serv',  'usuario_servicios.*', 'images.*'))
+                    ->groupby('usuario_servicios.id')
+                    ->orderBy($orderkey, $ordervalue)
+                    ->paginate($pagination);
+        }
+
+        return $imagenesF;
+    }
+    
+    
+    //Despliega los trips cerca de una atraccion
+    public function getTripList($id_atraccion, $idCatalogo) {
+
+
+        
+        $atraccion = DB::table('usuario_servicios')
+                ->where('id', '=', $id_atraccion)
+                ->where('estado_servicio', '=', '1')
+                ->where('estado_servicio_usuario', '=', 1)
+                ->select('usuario_servicios.*')
+                ->first();
+
+        
+          $ubicGeo = DB::table('ubicacion_geografica')
+                                ->where('ubicacion_geografica.id', '=', $atraccion->id_provincia)
+                                ->select('ubicacion_geografica.*')->first();
+
+        
+//        $trips = DB::table('usuario_servicios')
+//                ->join('servicio_establecimiento_usuario', 'id_usuario_servicio', '=', 'usuario_servicios.id')
+//                ->join('catalogo_servicio_establecimiento', 'servicio_establecimiento_usuario.id_servicio_est', '=', 'catalogo_servicio_establecimiento.id')
+//                ->select('usuario_servicios.*')
+//                ->where('catalogo_servicio_establecimiento.nombre_servicio_est', '=', $ubicGeo->nombre)
+//                ->where('estado_servicio', '=', 1)
+//                ->where('catalogo_servicio_establecimiento.id_catalogo_servicio', '=', 11)
+//                ->where('estado_servicio_usuario', '=', 1)
+//                ->where('estado_servicio_est', '=', 1)
+//                ->get();
+
+     
+    
+        $trips = DB::table('usuario_servicios')
+                ->join('servicio_establecimiento_usuario', 'id_usuario_servicio', '=', 'usuario_servicios.id')
+                ->join('catalogo_servicio_establecimiento', 'servicio_establecimiento_usuario.id_servicio_est', '=', 'catalogo_servicio_establecimiento.id')
+                ->select('usuario_servicios.*')
+                ->where('estado_servicio', '=', 1)
+                ->where('estado_servicio_usuario', '=', 1)
+                ->where('estado_servicio_est', '=', 1)
+                
+
+                
+                   ->where(function($query) use ($ubicGeo){        
+         $query->where('catalogo_servicio_establecimiento.id_catalogo_servicio', '=', 11)
+                         ->where('catalogo_servicio_establecimiento.nombre_servicio_est', '=', $ubicGeo->nombre);
+         })
+                
+            ->Orwhere(function($query) use ($ubicGeo){        
+         $query->where('catalogo_servicio_establecimiento.id_catalogo_servicio', '=', 3)
+                         ->where('catalogo_servicio_establecimiento.nombre_servicio_est', '=', 'Tours en '.$ubicGeo->nombre);
+         })
+                ->get();
+          
+          
+            return $trips;
+
+        
+    }
+    
+     
+       //Obtiene los operadores que viajan a esas provincias
+    public function getOperadores($id_provincia) {
+
+
+            $nombreProvincia = DB::table('ubicacion_geografica')
+                        ->where('ubicacion_geografica.id', '=', $id_provincia)
+                        ->select('ubicacion_geografica.nombre')->first();
+
+        if(isset($nombreProvincia))
+        {
+        
+        $servicios = DB::table('catalogo_servicios')
+                        ->join('usuario_servicios', 'id_catalogo_servicios', '=', 'usuario_servicios.id_catalogo_servicio')
+                        ->join('catalogo_servicio_establecimiento', 'catalogo_servicio_establecimiento.id_catalogo_servicio', '=', 'catalogo_servicios.id_catalogo_servicios')
+                        ->where('usuario_servicios.id_catalogo_servicio', '=', 3)        
+                         ->where('catalogo_servicio_establecimiento.nombre_servicio_est', '=','Tours en '.$nombreProvincia->nombre)        
+                        ->where('usuario_servicios.estado_servicio_usuario', '=', 1)
+                        ->where('usuario_servicios.estado_servicio', '=', 1)
+                ->where('usuario_servicios.id_provincia', '<>', 0)
+                        ->select('usuario_servicios.*','catalogo_servicios.nombre_servicio', 'catalogo_servicios.id_catalogo_servicios', 'catalogo_servicios.nombre_servicio_eng')
+                        ->distinct()->get();
+
+        
+        return $servicios;}
+        else
+            return null;
+    }
+    
+    //Obtiene los trips que pasan por esa provincia
+    public function getTrips($id_provincia) {
+
+
+            $nombreProvincia = DB::table('ubicacion_geografica')
+                        ->where('ubicacion_geografica.id', '=', $id_provincia)
+                        ->select('ubicacion_geografica.nombre')->first();
+
+        if(isset($nombreProvincia)){
+        
+        $servicios = DB::table('catalogo_servicios')
+                        ->join('usuario_servicios', 'id_catalogo_servicios', '=', 'usuario_servicios.id_catalogo_servicio')
+                        ->join('catalogo_servicio_establecimiento', 'catalogo_servicio_establecimiento.id_catalogo_servicio', '=', 'catalogo_servicios.id_catalogo_servicios')
+                        ->where('usuario_servicios.id_catalogo_servicio', '=', 11)        
+                         ->where('catalogo_servicio_establecimiento.nombre_servicio_est', '=', $nombreProvincia->nombre)        
+                        ->where('usuario_servicios.estado_servicio_usuario', '=', 1)
+                        ->where('usuario_servicios.estado_servicio', '=', 1)
+                ->where('usuario_servicios.id_provincia', '<>', 0)
+                        ->select('usuario_servicios.*','catalogo_servicios.nombre_servicio', 'catalogo_servicios.id_catalogo_servicios', 'catalogo_servicios.nombre_servicio_eng')
+                        ->distinct()->get();
+
+        
+        return $servicios;
+    }
+    else
+        return null;
+    }
+    
 //Entrega el arreglo de los servicios más visitados por provincia
     public function getProvinciaIntern($id_provincia, $id_atraccion, $canton, $parroquia, $page_now, $page_stoped) {
 
@@ -403,10 +724,52 @@ class PublicServiceRepository extends BaseRepository {
         }
         return null;
     }
+    
+    
+     //*************************************************************************//
+    //                 DETALLES PROMOCIONES Y EVENTOSS                         //  
+    //*************************************************************************//
+    public function getInfoPromo($id) {
+
+        $promoInfo = DB::table('promocion_usuario_servicio')->where('id', '=', $id)->get();
+        return $promoInfo;
+    }
+    
+    public function getInfoEvento($id) {
+
+        $eventoInfo = DB::table('eventos_usuario_servicios')->where('id', '=', $id)->get();
+        return $eventoInfo;
+    }
+
+    public function getNombreUsuarioServicio($id) {
+
+        //$nombreUsuarioServ = DB::table('usuario_servicios')->where('id', '=', $id)->select('nombre_servicio')->get();
+        $nombreUsuarioServ = DB::table('usuario_servicios')->where('id', '=', $id)->get();
+        
+        return $nombreUsuarioServ;
+    }
+
+    
+       public function updateErrorRevisado($id,$ipUser,$fecha,$usuario){
+        
+        $updateDataError = DB::table('reportados')
+                            ->where('id',$id)
+                            ->update(['estado' => 0, 'usuario_revision' => $usuario, 'ip_revision' => $ipUser, 'fecha_revision' => $fecha]); 
+        return $updateDataError;
+    }
+
+    
+    public function getNombreUsuarioServicioEvento($id) {
+
+        $nombreUsuarioServ = DB::table('usuario_servicios')->where('id', '=', $id)->select('nombre_servicio')->get();
+        
+        return $nombreUsuarioServ;
+    } 
 
     //Entrega el arreglo de los servicios más visitados por provincia canton para la parte interna
     public function getCantonIntern($id_canton, $id_atraccion, $parroquia, $page_now, $page_stoped) {
 
+        $atraccion=$this->getAtraccionDetails($id_atraccion);
         $arrayAtraccion = array();
 
         if ($parroquia == 0) {
@@ -421,6 +784,9 @@ class PublicServiceRepository extends BaseRepository {
 
 
 
+     if($atraccion ==null)
+        {
+
         $visitados = DB::table('usuario_servicios')
                 ->where('usuario_servicios.estado_servicio', '=', '1')
                 ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
@@ -433,6 +799,25 @@ class PublicServiceRepository extends BaseRepository {
                 ->orderBy('prioridad', 'desc')
                 ->take(10)
                 ->get();
+
+        }
+        else
+        {
+            $catalogo=$atraccion->id_catalogo_servicio;
+            $visitados = DB::table('usuario_servicios')
+                ->where('usuario_servicios.estado_servicio', '=', '1')
+                ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
+                ->where('usuario_servicios.id_canton', '=', $id_canton)
+                ->whereIn('id_catalogo_servicio', array($catalogo, 8))
+                ->whereNotIn('usuario_servicios.id', array($id_atraccion))
+                ->whereNotIn('usuario_servicios.id', $arrayAtraccion)
+                ->select('usuario_servicios.id')
+                ->orderBy('num_visitas', 'desc')
+                ->orderBy('prioridad', 'desc')
+                ->take(10)
+                ->get();
+            
+        }
 
 
 
@@ -738,21 +1123,78 @@ class PublicServiceRepository extends BaseRepository {
         }
 
         if ($ubicGeo == null) {
+            if($catalogo==4)
+            {
+                $eventos = DB::table('usuario_servicios')
+                            ->where('usuario_servicios.estado_servicio', '=', '1')
+                            
+                        ->whereIn('usuario_servicios.id_catalogo_servicio', array(4,6,9,10))
+                            ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
+                            ->select('usuario_servicios.id')
+                            ->orderBy('usuario_servicios.num_visitas', 'desc')
+            ->take($take)->get();
+                
+            }
+            else{
             $eventos = DB::table('usuario_servicios')
                             ->where('usuario_servicios.estado_servicio', '=', '1')
                             ->where('usuario_servicios.id_catalogo_servicio', '=', $catalogo)
                             ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
                             ->select('usuario_servicios.id')
                             ->orderBy('usuario_servicios.num_visitas', 'desc')
-                            ->take($take)->get();
+            ->take($take)->get();}
         } else {
 
 
+            $tipoUbicacion = DB::table('ubicacion_geografica')
+                            ->where('ubicacion_geografica.id', '=', $ubicGeo->id)
+                            ->select('ubicacion_geografica.*')->first();
+
+
+
+            $arrayUbicaciones = array();
+            $arrayUbicaciones[] = $ubicGeo->id;
+            $idNivelPadre = $tipoUbicacion->idUbicacionGeograficaPadre;
+
+            //si es parroquia valida canton sube un nivel     
+            if ($idNivelPadre != 0) {
+
+                $arrayUbicaciones[] = $idNivelPadre;
+                $tipoUbicacion2 = DB::table('ubicacion_geografica')
+                                ->where('ubicacion_geografica.id', '=', $idNivelPadre)
+                                ->select('ubicacion_geografica.*')->first();
+                $idNivelPadre2 = $tipoUbicacion2->idUbicacionGeograficaPadre;
+            }
+            if (isset($idNivelPadre2)) {
+                if ($idNivelPadre2 != 0) {
+
+                    $arrayUbicaciones[] = $idNivelPadre2;
+                }
+            }
+
+if($catalogo==4)
+{
+    $eventos = DB::table('usuario_servicios')
+                            ->where(function($query) use ($arrayUbicaciones) {
+                                $query->orWhereIn('usuario_servicios.id_parroquia', $arrayUbicaciones)
+                                ->orWhereIn('usuario_servicios.id_provincia', $arrayUbicaciones)
+                                ->orWhereIn('usuario_servicios.id_canton', $arrayUbicaciones);
+                            })
+                            ->where('usuario_servicios.estado_servicio', '=', '1')
+                            ->whereIn('usuario_servicios.id_catalogo_servicio', array(4,6,9,10))
+                            ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
+                            ->select('usuario_servicios.id')
+                            ->orderBy('usuario_servicios.num_visitas', 'desc')
+                            ->take($take)->get();
+    
+}
+else
+{
             $eventos = DB::table('usuario_servicios')
-                            ->where(function($query) use ($ubicGeo) {
-                                $query->orWhere('usuario_servicios.id_parroquia', '=', $ubicGeo->id)
-                                ->orWhere('usuario_servicios.id_provincia', '=', $ubicGeo->id)
-                                ->orWhere('usuario_servicios.id_canton', '=', $ubicGeo->id);
+                            ->where(function($query) use ($arrayUbicaciones) {
+                                $query->orWhereIn('usuario_servicios.id_parroquia', $arrayUbicaciones)
+                                ->orWhereIn('usuario_servicios.id_provincia', $arrayUbicaciones)
+                                ->orWhereIn('usuario_servicios.id_canton', $arrayUbicaciones);
                             })
                             ->where('usuario_servicios.estado_servicio', '=', '1')
                             ->where('usuario_servicios.id_catalogo_servicio', '=', $catalogo)
@@ -760,6 +1202,7 @@ class PublicServiceRepository extends BaseRepository {
                             ->select('usuario_servicios.id')
                             ->orderBy('usuario_servicios.num_visitas', 'desc')
                             ->take($take)->get();
+}
         }
 
 
@@ -796,11 +1239,13 @@ class PublicServiceRepository extends BaseRepository {
 
             $imagenes = DB::table('images')
                     ->join('usuario_servicios', 'usuario_servicios.id', '=', 'images.id_usuario_servicio')
-                    ->leftJoin('satisfechos_usuario_servicio', 'usuario_servicios.id', '=', 'satisfechos_usuario_servicio.id_usuario_servicio')
+                    //->leftJoin('satisfechos_usuario_servicio', 'usuario_servicios.id', '=', 'satisfechos_usuario_servicio.id_usuario_servicio')
+                    ->join('ubicacion_geografica', 'usuario_servicios.id_canton', '=', 'ubicacion_geografica.id')
                     ->where('estado_fotografia', '=', '1')
                     ->whereIn('images.id', $resulte)
-                    ->where('usuario_servicios.id_catalogo_servicio', '=', $catalogo)
-                    ->select(array('usuario_servicios.id as id_usr_serv', 'satisfechos_usuario_servicio.id_usuario_servicio', 'usuario_servicios.*', 'images.*', DB::raw('COUNT(satisfechos_usuario_servicio.id_usuario_servicio) as satisfechos')))
+                    //->where('usuario_servicios.id_catalogo_servicio', '=', $catalogo)
+                    //->select(array('usuario_servicios.id as id_usr_serv', 'satisfechos_usuario_servicio.id_usuario_servicio', 'usuario_servicios.*', 'images.*', DB::raw('COUNT(satisfechos_usuario_servicio.id_usuario_servicio) as satisfechos')))
+                    ->select('usuario_servicios.id as id_usr_serv', 'usuario_servicios.*', 'images.*','ubicacion_geografica.nombre as geografica')
                     ->groupby('usuario_servicios.id')
                     ->orderBy('usuario_servicios.prioridad', 'desc')
                     ->orderBy('usuario_servicios.num_visitas', 'desc')
@@ -946,7 +1391,7 @@ class PublicServiceRepository extends BaseRepository {
          * Itinerarios: Igual
          *          */
 
-
+$dt = Carbon::now();
         if ($ubicacion != "") {
 
 
@@ -969,11 +1414,12 @@ class PublicServiceRepository extends BaseRepository {
             $ubicGeo = null;
         }
         if ($ubicGeo == null) {
+            
             $eventos = DB::table('usuario_servicios')
                             ->join('eventos_usuario_servicios', 'usuario_servicios.id', '=', 'eventos_usuario_servicios.id_usuario_servicio')
                             ->where('usuario_servicios.estado_servicio', '=', '1')
                             ->where('eventos_usuario_servicios.estado_evento', '=', '1')
-                            ->where('eventos_usuario_servicios.fecha_hasta', '>=', "'" . Carbon::now() . "'")
+                            ->where('eventos_usuario_servicios.fecha_hasta', '>=',$dt)
                             ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
                             ->select('eventos_usuario_servicios.id')
                             ->orderBy('usuario_servicios.num_visitas', 'desc')
@@ -989,7 +1435,7 @@ class PublicServiceRepository extends BaseRepository {
                                 ->orWhere('usuario_servicios.id_canton', '=', $ubicGeo->idUbicacionGeograficaPadre);
                             })
                             ->where('usuario_servicios.estado_servicio', '=', '1')
-                            ->where('eventos_usuario_servicios.fecha_hasta', '>=', "'" . Carbon::now() . "'")
+                            ->where('eventos_usuario_servicios.fecha_hasta', '>=', $dt)
                             ->where('eventos_usuario_servicios.estado_evento', '=', '1')
                             ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
                             ->select('eventos_usuario_servicios.id')
@@ -1163,7 +1609,7 @@ class PublicServiceRepository extends BaseRepository {
          * Itinerarios: Igual
          *          */
 
-
+$dt = Carbon::now();
         if ($ubicacion != "") {
 
             $ubicGeo = DB::table('ubicacion_geografica')
@@ -1190,7 +1636,7 @@ class PublicServiceRepository extends BaseRepository {
                             ->join('promocion_usuario_servicio', 'usuario_servicios.id', '=', 'promocion_usuario_servicio.id_usuario_servicio')
                             ->where('usuario_servicios.estado_servicio', '=', '1')
                             ->where('promocion_usuario_servicio.estado_promocion', '=', '1')
-                            ->where('promocion_usuario_servicio.fecha_hasta', '>=', "'" . Carbon::now() . "'")
+                            ->where('promocion_usuario_servicio.fecha_hasta', '>=', $dt)
                             ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
                             ->where(function($query) use ($ubicGeo) {
                                 $query->orWhere('usuario_servicios.id_parroquia', '=', $ubicGeo->id)
@@ -1248,7 +1694,7 @@ class PublicServiceRepository extends BaseRepository {
          * Itinerarios: Igual
          *          */
 
-
+$dt = Carbon::now();
         if ($ubicacion != "") {
 
             $ubicGeo = DB::table('ubicacion_geografica')
@@ -1273,7 +1719,7 @@ class PublicServiceRepository extends BaseRepository {
                             ->join('eventos_usuario_servicios', 'usuario_servicios.id', '=', 'eventos_usuario_servicios.id_usuario_servicio')
                             ->where('usuario_servicios.estado_servicio', '=', '1')
                             ->where('eventos_usuario_servicios.estado_evento', '=', '1')
-                            ->where('fecha_hasta', '>=', "'" . Carbon::now() . "'")
+                            ->where('fecha_hasta', '>=', $dt)
                             ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
                             ->select('eventos_usuario_servicios.id')
                             ->orderBy('usuario_servicios.num_visitas', 'desc')
@@ -1290,7 +1736,7 @@ class PublicServiceRepository extends BaseRepository {
                             })
                             ->where('usuario_servicios.estado_servicio', '=', '1')
                             ->where('eventos_usuario_servicios.estado_evento', '=', '1')
-                            ->where('fecha_hasta', '>=', "'" . Carbon::now() . "'")
+                            ->where('fecha_hasta', '>=', $dt)
                             ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
                             ->select('eventos_usuario_servicios.id')
                             ->orderBy('usuario_servicios.num_visitas', 'desc')
@@ -1529,13 +1975,13 @@ class PublicServiceRepository extends BaseRepository {
     //Entrega el arreglo de los eventos según la localización para la pantalla interna
     public function getPromoIntern($ubicacion) {
 
-
+$dt = Carbon::now();
         $array = array();
         $array = array_pluck($ubicacion, 'id_usuario_servicio');
 
         $promo = DB::table('promocion_usuario_servicio')
                 ->whereIn('promocion_usuario_servicio.id_usuario_servicio', $array)
-                ->where('fecha_hasta', '>=', "'" . Carbon::now() . "'")
+                ->where('fecha_hasta', '>=',$dt)
                 ->where('promocion_usuario_servicio.estado_promocion', '=', '1')
                 ->select('promocion_usuario_servicio.id')
                 ->take(10)
@@ -1578,7 +2024,7 @@ class PublicServiceRepository extends BaseRepository {
     //Entrega el arreglo de los eventos según la localización para la pantalla interna
     public function getEventIntern($ubicacion) {
 
-
+$dt = Carbon::now();
         $array = array();
 
         foreach ($ubicacion as $ub) {
@@ -1586,9 +2032,12 @@ class PublicServiceRepository extends BaseRepository {
         }
 
         $eventos = DB::table('eventos_usuario_servicios')
+                         ->join('usuario_servicios', 'usuario_servicios.id', '=', 'eventos_usuario_servicios.id_usuario_servicio')
                         ->whereIn('eventos_usuario_servicios.id_usuario_servicio', $array)
-                        ->where('fecha_hasta', '>=', "'" . Carbon::now() . "'")
+                        ->where('fecha_hasta', '>=', $dt)
                         ->where('eventos_usuario_servicios.estado_evento', '=', '1')
+                         ->where('usuario_servicios.estado_servicio', '=', '1')
+                ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
                         ->select('eventos_usuario_servicios.id')
                         ->orderBy('eventos_usuario_servicios.id_usuario_servicio', 'desc')
                         ->take(10)->get();
@@ -1611,14 +2060,13 @@ class PublicServiceRepository extends BaseRepository {
 
             $imagenes = DB::table('images')
                     ->join('usuario_servicios', 'usuario_servicios.id', '=', 'images.id_usuario_servicio')
-                    ->join('catalogo_servicios', 'usuario_servicios.id_catalogo_servicio', '=', 'catalogo_servicios.id_catalogo_servicios')
+                    ->join('eventos_usuario_servicios as ev', 'ev.id', '=', 'images.id_auxiliar')
                     ->join('eventos_usuario_servicios', 'usuario_servicios.id', '=', 'eventos_usuario_servicios.id_usuario_servicio')
                     ->whereIn('images.id', $array)
                     ->where('estado_fotografia', '=', '1')
                     ->where('id_catalogo_fotografia', '=', '4')
-                    ->select('usuario_servicios.*', 'images.*', 'catalogo_servicios.nombre_servicio as catalogo_nombre', 'eventos_usuario_servicios.*')
-                    ->orderBy('usuario_servicios.prioridad', 'desc')
-                    ->orderBy('usuario_servicios.num_visitas', 'desc')
+                    ->where('eventos_usuario_servicios.estado_evento', '=', '1')
+                    ->select('images.*', 'usuario_servicios.*', 'eventos_usuario_servicios.*')
                     ->get();
 
             return $imagenes;
@@ -1636,7 +2084,7 @@ class PublicServiceRepository extends BaseRepository {
          * Promociones: promociones dependientes del usuario_ servicio
          * Itinerarios: Igual
          *          */
-
+$dt = Carbon::now();
 
         if ($ubicacion != "") {
 
@@ -1669,7 +2117,7 @@ class PublicServiceRepository extends BaseRepository {
                             })
                             ->where('usuario_servicios.estado_servicio', '=', '1')
                             ->where('eventos_usuario_servicios.estado_evento', '=', '1')
-                            ->where('fecha_hasta', '>=', "'" . Carbon::now() . "'")
+                            ->where('fecha_hasta', '>=', $dt)
                             ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
                             ->select('eventos_usuario_servicios.id')
                             ->orderBy('usuario_servicios.num_visitas', 'desc')
@@ -1869,20 +2317,132 @@ class PublicServiceRepository extends BaseRepository {
 
 
 
-        $query = DB::table('searchengine')
-                ->whereRaw("match(search) against ('" . $term . "')")
-                ->orWhere('searchengine.search', 'like', "%" . $term)
-                ->orWhere('searchengine.search', 'like', $term . "%")
-                ->orWhere('searchengine.search', 'like', "%" . $term . "%")
-                ->select('searchengine.id_usuario_servicio', 'searchengine.tipo_busqueda')
+       $query = DB::table('searchengine')
+                ->whereRaw("match(search) against ('" . $term . "'  in boolean mode)")
+                ->select(array('searchengine.id_usuario_servicio', 'searchengine.tipo_busqueda', DB::raw("match (search) against ('" . $term . "')as rank")))
+                ->orderBy('rank', 'DESC')
                 ->get();
-
 
         return $query;
     }
+    
+    
+    
+    
+       //Obtiene las top n eventos para el home
+    public function getTopEvents($take) {
+        
+        $dt = Carbon::now();
+            $eventos = DB::table('usuario_servicios')
+                            ->join('eventos_usuario_servicios', 'usuario_servicios.id', '=', 'eventos_usuario_servicios.id_usuario_servicio')
+                            ->join('ubicacion_geografica', 'ubicacion_geografica.id', '=', 'usuario_servicios.id_provincia')
+                            ->where('usuario_servicios.estado_servicio', '=', '1')
+                            ->where('eventos_usuario_servicios.estado_evento', '=', '1')
+                            ->where('eventos_usuario_servicios.fecha_hasta', '>=', $dt)
+                            ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
+                            ->select('eventos_usuario_servicios.id')
+                            ->orderBy('usuario_servicios.num_visitas', 'desc')
+                            ->take($take)->get();
+            
+            
+        
 
-    public function getDespliegueBusqueda($codigos, $pagination, $tipoBusqueda) {
 
+        if ($eventos != null) {
+            $array = array();
+            $array1 = array();
+
+            foreach ($eventos as $to) {
+                $imagenes = DB::table('images')
+                        ->where('images.id_auxiliar', '=', $to->id)
+                        ->where('estado_fotografia', '=', '1')
+                        ->where('id_catalogo_fotografia', '=', '4')
+                        ->select('images.id')
+                        ->first();
+
+                if ($imagenes != null)
+                    $array[] = $imagenes->id;
+            }
+
+            
+      
+
+            
+            $imagenes2 = DB::table('images')
+                    ->join('eventos_usuario_servicios', 'images.id_auxiliar', '=', 'eventos_usuario_servicios.id')
+                    ->join('usuario_servicios', 'usuario_servicios.id', '=', 'eventos_usuario_servicios.id_usuario_servicio')
+                   ->join('catalogo_servicios', 'usuario_servicios.id_catalogo_servicio', '=', 'catalogo_servicios.id_catalogo_servicios')
+                   
+                  ->join('ubicacion_geografica', 'ubicacion_geografica.id', '=', 'usuario_servicios.id_provincia')
+                   ->whereIn('images.id', $array)
+            ->where('eventos_usuario_servicios.fecha_hasta', '>=', $dt)
+                   ->where('estado_fotografia', '=', '1')
+                  ->where('eventos_usuario_servicios.estado_evento', '=', '1')
+                  ->select('usuario_servicios.*', 'images.*', 'eventos_usuario_servicios.*','eventos_usuario_servicios.id as id_evento','ubicacion_geografica.*')
+                  //    ->select('images.*')
+                    
+                    ->paginate(4);
+
+            
+            //dd($imagenes2);
+            return $imagenes2;
+        }
+        else
+                 return null;
+        
+        
+    }
+    
+            //Obtiene llos eventos de usuario servicio macro
+    public function getTopEventsIndividual($n) {
+
+
+
+         $dt = Carbon::now();
+
+
+        
+            $top = DB::table('usuario_servicios')
+                            ->where('usuario_servicios.id_catalogo_servicio', '=', '10')
+                            ->where('usuario_servicios.estado_servicio', '=', '1')
+                            ->where('fecha_fin', '>=', $dt)
+                            ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
+                            ->orderBy('usuario_servicios.prioridad', 'desc')
+                            ->orderBy('usuario_servicios.num_visitas', 'desc')
+                            ->take($n)->get();
+
+            if ($top != null) {
+                foreach ($top as $to) {
+                    $imagenes = DB::table('images')
+                            ->where('images.id_auxiliar', '=', $to->id)
+                            ->where('estado_fotografia', '=', '1')
+                            ->where('id_catalogo_fotografia', '=', '1')
+                            ->select('images.id')
+                            ->first();
+
+                    if ($imagenes != null)
+                        $final_top[] = $imagenes->id;
+                }
+          
+        
+
+
+        $imagenesF = DB::table('images')
+                ->join('usuario_servicios', 'usuario_servicios.id', '=', 'images.id_usuario_servicio')
+                ->join('ubicacion_geografica', 'usuario_servicios.id_provincia', '=', 'ubicacion_geografica.id')
+                ->whereIn('images.id', $final_top)
+                ->select('images.*', 'usuario_servicios.*', 'ubicacion_geografica.nombre', 'ubicacion_geografica.id as id_geo', 'ubicacion_geografica.id_region')
+                ->orderBy('usuario_servicios.prioridad', 'desc')
+                //->orderBy('usuario_servicios.num_visitas', 'desc')
+                ->orderByRaw('RAND()')
+                ->paginate(4);
+
+        return $imagenesF;  }
+        return null;
+    }
+
+
+    public function getDespliegueBusqueda($codigos, $pagination, $tipoBusqueda,$term) {
 
         /* Se despliegan las imagenes de los codigos encontrados en las busquedas
          *          */
@@ -1893,6 +2453,7 @@ class PublicServiceRepository extends BaseRepository {
 
             if ($to->tipo_busqueda == $tipoBusqueda)
                 $array[] = $to->id_usuario_servicio;
+            
         }
 
 
@@ -1901,7 +2462,7 @@ class PublicServiceRepository extends BaseRepository {
                 ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
                 ->whereIn('usuario_servicios.id', $array)
                 ->select('usuario_servicios.id')
-                ->orderBy('usuario_servicios.num_visitas', 'desc')
+               // ->orderBy('usuario_servicios.num_visitas', 'desc')
                 ->get();
 
         if ($servicio != null) {
@@ -1920,16 +2481,126 @@ class PublicServiceRepository extends BaseRepository {
                     $array1[] = $imagenes->id;
             }
 
+  
+            $imagenes = DB::table('images')
+                    ->join('searchengine','searchengine.id_usuario_servicio','=','images.id_usuario_servicio')
+                ->join('usuario_servicios', 'usuario_servicios.id', '=', 'images.id_usuario_servicio')
+                ->join('ubicacion_geografica', 'usuario_servicios.id_canton', '=', 'ubicacion_geografica.id')
+                ->whereRaw("match(search) against ('" . $term . "'  in boolean mode)")
+                    ->where('estado_fotografia', '=', '1')
+                    ->where('tipo_busqueda', '=', '4')
+                    ->whereIn('images.id', $array1)
+                //->select('images.*', 'usuario_servicios.id as id_usr_serv','usuario_servicios.*', 'ubicacion_geografica.nombre as nombreUbicacion', 'ubicacion_geografica.id as id_geo', 'ubicacion_geografica.id_region')
+                   ->select (array('images.*', 'usuario_servicios.id as id_usr_serv','usuario_servicios.*', 'ubicacion_geografica.nombre as nombreUbicacion', 'ubicacion_geografica.id as id_geo', 'ubicacion_geografica.id_region','searchengine.id_usuario_servicio', 'searchengine.tipo_busqueda', DB::raw("match (search) against ('" . $term . "')as rank")))
+                    ->distinct()
+                   ->orderBy('usuario_servicios.num_visitas', 'DESC')
+                    ->orderBy('usuario_servicios.prioridad', 'desc')
+                      ->orderBy('rank', 'DESC')
+                
+                   
+                
+                //->orderByRaw('RAND()')
+                ->paginate($pagination);
+
+
+              
+
+            return $imagenes;
+        }
+        return null;
+    }
+
+    
+    
+    
+    
+    
+    //Entrega el arreglo de los catalogos según la localización
+    public function getBusquedaInicialCatalogoIntern($id,$catalogo, $busquedaI, $page_now, $page_stoped, $take, $pagination) {
+
+            $servicio = DB::table('usuario_servicios')
+                            ->where('usuario_servicios.estado_servicio', '=', '1')
+                            ->where('usuario_servicios.id', '=', $id)
+                            ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
+                            ->select('usuario_servicios.*')
+                            ->first();
+        
+
+
+             $arrayBusqueda = array();
+      
+            $arrayBusqueda[]=$busquedaI;
+            
+
+
+            $busqueda = DB::table('usuario_servicios')
+                           
+                            ->Where(function($query) use ($arrayBusqueda) {
+                                $query->where('usuario_servicios.nombre_servicio','like', "%" . $arrayBusqueda[0])
+                                ->orWhere('usuario_servicios.nombre_servicio', 'like', $arrayBusqueda[0] . "%")
+                                ->orWhere('usuario_servicios.nombre_servicio', 'like', "%" . $arrayBusqueda[0] . "%")
+                                        ->orWhere('usuario_servicios.detalle_servicio','like', "%" . $arrayBusqueda[0])
+                                ->orWhere('usuario_servicios.detalle_servicio', 'like', $arrayBusqueda[0] . "%")
+                                ->orWhere('usuario_servicios.detalle_servicio', 'like', "%" . $arrayBusqueda[0] . "%")
+                                        ->orWhere('usuario_servicios.detalle_servicio_eng','like', "%" . $arrayBusqueda[0])
+                                ->orWhere('usuario_servicios.detalle_servicio_eng', 'like', $arrayBusqueda[0] . "%")
+                                ->orWhere('usuario_servicios.detalle_servicio_eng', 'like', "%" . $arrayBusqueda[0] . "%");
+                                
+                            })
+                            
+                            
+                            
+                     
+                            ->where('usuario_servicios.id_provincia', $servicio->id_provincia)
+                           
+                            ->where('usuario_servicios.estado_servicio', '=', '1')
+                            ->where('usuario_servicios.id_catalogo_servicio', '=', $catalogo)
+                            ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
+                            ->select('usuario_servicios.id')
+                            //->orderBy('usuario_servicios.num_visitas', 'desc')
+                            ->take($take)->get();
+        
+
+
+        if ($busqueda != null) {
+            $array = array();
+            $array1 = array();
+
+            foreach ($busqueda as $to) {
+                $imagenes = DB::table('images')
+                        ->where('images.id_auxiliar', '=', $to->id)
+                        ->where('estado_fotografia', '=', '1')
+                        ->where('id_catalogo_fotografia', '=', '1')
+                        ->select('images.id')
+                        ->first();
+
+                if ($imagenes != null)
+                    $array[] = $imagenes->id;
+            }
+
+            //$allCity = $this->getEventsDepCityAll($ubicacion, $take);
+            if ($page_now != null) {
+                $currentPage = ($page_now - $page_stoped);
+                // You can set this to any page you want to paginate to
+                // Make sure that you call the static method currentPageResolver()
+                // before querying users
+                Paginator::currentPageResolver(function () use ($currentPage) {
+                    return $currentPage;
+                });
+            }
+
+            $resulte = array_diff($array, $array1);
+
+
 
             $imagenes = DB::table('images')
                     ->join('usuario_servicios', 'usuario_servicios.id', '=', 'images.id_usuario_servicio')
                     //->leftJoin('satisfechos_usuario_servicio', 'usuario_servicios.id', '=', 'satisfechos_usuario_servicio.id_usuario_servicio')
-                    ->join('ubicacion_geografica', 'ubicacion_geografica.id', '=', 'usuario_servicios.id_canton')
+                    ->join('ubicacion_geografica', 'usuario_servicios.id_canton', '=', 'ubicacion_geografica.id')
                     ->where('estado_fotografia', '=', '1')
-                    ->whereIn('images.id', $array1)
-
-                    //->select(array('usuario_servicios.id as id_usr_serv', 'satisfechos_usuario_servicio.id_usuario_servicio', 'usuario_servicios.*', 'images.*', DB::raw('COUNT(satisfechos_usuario_servicio.id_usuario_servicio) as satisfechos')))
-                    ->select(array('usuario_servicios.id as id_usr_serv', 'usuario_servicios.*', 'images.*', 'ubicacion_geografica.nombre as nombreUbicacion'))
+                    ->whereIn('images.id', $resulte)
+                    ->where('usuario_servicios.id_catalogo_servicio', '=', $catalogo)
+                    ->select('usuario_servicios.id as id_usr_serv', 'usuario_servicios.*', 'images.*', 'ubicacion_geografica.nombre as nombre_ubicacion')
                     ->groupby('usuario_servicios.id')
                     ->orderBy('usuario_servicios.prioridad', 'desc')
                     ->orderBy('usuario_servicios.num_visitas', 'desc')
@@ -1943,7 +2614,141 @@ class PublicServiceRepository extends BaseRepository {
         }
         return null;
     }
+    
+    
+    
+    
+    
+    
+    
+    //Entrega el arreglo de los catalogos según la localización padre
+    public function getBusquedaInicialCatalogoPadreIntern($id,$catalogo, $busquedaI, $page_now, $page_stoped, $take, $pagination) {
 
+   
+
+
+            $servicio = DB::table('usuario_servicios')
+                            ->where('usuario_servicios.estado_servicio', '=', '1')
+                            ->where('usuario_servicios.id', '=', $id)
+                            ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
+                            ->select('usuario_servicios.*')
+                            ->first();
+        
+
+
+            $arrayUbicaciones = array();
+            $arrayUbicaciones[] = $servicio->id_canton;
+            $arrayUbicaciones[] = $servicio->id_provincia;
+
+             $arrayBusqueda = array();
+      
+            $arrayBusqueda[]=$busquedaI;
+            
+
+
+         $busqueda = DB::table('usuario_servicios')
+                           
+                            ->Where(function($query) use ($arrayBusqueda) {
+                                $query->where('usuario_servicios.nombre_servicio','like', "%" . $arrayBusqueda[0])
+                                ->orWhere('usuario_servicios.nombre_servicio', 'like', $arrayBusqueda[0] . "%")
+                                ->orWhere('usuario_servicios.nombre_servicio', 'like', "%" . $arrayBusqueda[0] . "%")
+                                        ->orWhere('usuario_servicios.detalle_servicio','like', "%" . $arrayBusqueda[0])
+                                ->orWhere('usuario_servicios.detalle_servicio', 'like', $arrayBusqueda[0] . "%")
+                                ->orWhere('usuario_servicios.detalle_servicio', 'like', "%" . $arrayBusqueda[0] . "%")
+                                        ->orWhere('usuario_servicios.detalle_servicio_eng','like', "%" . $arrayBusqueda[0])
+                                ->orWhere('usuario_servicios.detalle_servicio_eng', 'like', $arrayBusqueda[0] . "%")
+                                ->orWhere('usuario_servicios.detalle_servicio_eng', 'like', "%" . $arrayBusqueda[0] . "%");
+                                
+                            })
+                            
+                            
+                            
+                     
+                            ->where('usuario_servicios.id_provincia', $servicio->id_provincia)
+                           
+                            ->where('usuario_servicios.estado_servicio', '=', '1')
+                            ->where('usuario_servicios.id_catalogo_servicio', '=', $catalogo)
+                            ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
+                            ->select('usuario_servicios.id')
+                            //->orderBy('usuario_servicios.num_visitas', 'desc')
+                            ->take($take)->get();
+        
+
+
+
+
+        if ($busqueda != null) {
+            $array = array();
+            $array1 = array();
+
+            foreach ($busqueda as $to) {
+                $imagenes = DB::table('images')
+                        ->where('images.id_auxiliar', '=', $to->id)
+                        ->where('estado_fotografia', '=', '1')
+                        ->where('id_catalogo_fotografia', '=', '1')
+                        ->select('images.id')
+                        ->first();
+
+                if ($imagenes != null)
+                    $array[] = $imagenes->id;
+            }
+
+//            foreach ($eventosP as $toK) {
+//                $imagenesx = DB::table('images')
+//                        ->where('images.id_auxiliar', '=', $toK->id)
+//                        ->where('estado_fotografia', '=', '1')
+//                        ->where('id_catalogo_fotografia', '=', '1')
+//                        ->select('images.id')
+//                        ->first();
+//
+//                if ($imagenesx != null)
+//                    $array1[] = $imagenesx->id;
+//            }
+
+            //$allCity = $this->getEventsDepCityAll($ubicacion, $take);
+            if ($page_now != null) {
+                $currentPage = ($page_now - $page_stoped);
+                // You can set this to any page you want to paginate to
+                // Make sure that you call the static method currentPageResolver()
+                // before querying users
+                Paginator::currentPageResolver(function () use ($currentPage) {
+                    return $currentPage;
+                });
+            }
+
+
+
+  $resulte = array_diff($array, $array1);
+
+
+                $imagenes = DB::table('images')
+                    ->join('usuario_servicios', 'usuario_servicios.id', '=', 'images.id_usuario_servicio')
+                    //->leftJoin('satisfechos_usuario_servicio', 'usuario_servicios.id', '=', 'satisfechos_usuario_servicio.id_usuario_servicio')
+                    ->join('ubicacion_geografica', 'usuario_servicios.id_canton', '=', 'ubicacion_geografica.id')
+                    ->where('estado_fotografia', '=', '1')
+                    ->whereIn('images.id', $resulte)
+                    ->where('usuario_servicios.id_catalogo_servicio', '=', $catalogo)
+                    ->select('usuario_servicios.id as id_usr_serv', 'usuario_servicios.*', 'images.*', 'ubicacion_geografica.nombre as nombre_ubicacion')
+                    ->groupby('usuario_servicios.id')
+                    ->orderBy('usuario_servicios.prioridad', 'desc')
+                    ->orderBy('usuario_servicios.num_visitas', 'desc')
+                    ->paginate($pagination);
+
+
+
+
+
+
+            return $imagenes;
+        }
+        return null;
+    }
+    
+    
+    
+    
+    
+    
     //Obtiene las top n places de cada provincia
     public function getTopPlaces($n, $region) {
 
@@ -1953,24 +2758,32 @@ class PublicServiceRepository extends BaseRepository {
 //3:Oriente
 //4:Galapagos
 
+    
         $array = array($region);
 
         $final_top = array();
 
-        $provincias = DB::table('ubicacion_geografica')
-                ->whereIn('id_region', $array)
-                ->select('ubicacion_geografica.id')
-                ->get();
+       // $provincias = DB::table('ubicacion_geografica')
+         //       ->whereIn('id_region', $array)
+           //     ->select('ubicacion_geografica.id')
+             //   ->get();
 
 
-        foreach ($provincias as $provincia) {
+        //foreach ($provincias as $provincia) {
             $top = DB::table('usuario_servicios')
-                            ->where('usuario_servicios.id_provincia', '=', $provincia->id)
-                            ->where('usuario_servicios.id_catalogo_servicio', '=', '4')
+                    //->join('ubicacion_geografica', 'usuario_servicios.id_provincia', '=', 'ubicacion_geografica.id')
+                           // ->where('usuario_servicios.id_provincia', '=', $provincia->id)
+                            //->where('usuario_servicios.id_catalogo_servicio', '=', '4')
+                    
+                    ->whereIn('usuario_servicios.id_catalogo_servicio', array(4, 8,9))
                             ->where('usuario_servicios.estado_servicio', '=', '1')
+                    
+                    
+                    
                             ->where('usuario_servicios.estado_servicio_usuario', '=', '1')
                             ->orderBy('usuario_servicios.prioridad', 'desc')
                             ->orderBy('usuario_servicios.num_visitas', 'desc')
+                            ->orderByRaw('RAND()')
                             ->take($n)->get();
 
             if ($top != null) {
@@ -1986,7 +2799,7 @@ class PublicServiceRepository extends BaseRepository {
                         $final_top[] = $imagenes->id;
                 }
             }
-        }
+       // }
 
 
         $imagenesF = DB::table('images')
@@ -1995,9 +2808,11 @@ class PublicServiceRepository extends BaseRepository {
                 ->whereIn('images.id', $final_top)
                 ->select('images.*', 'usuario_servicios.*', 'ubicacion_geografica.nombre', 'ubicacion_geografica.id as id_geo', 'ubicacion_geografica.id_region')
                 ->orderBy('usuario_servicios.prioridad', 'desc')
-                ->orderBy('usuario_servicios.num_visitas', 'desc')
+                //->orderBy('usuario_servicios.num_visitas', 'desc')
+                ->orderByRaw('RAND()')
                 ->paginate(4);
 
+        
         return $imagenesF;
     }
 
@@ -2081,11 +2896,15 @@ class PublicServiceRepository extends BaseRepository {
 
 
         $operador = new $this->usuario_servicio;
+
+        if($visitas!=null){
         $operadorData = $operador::where('id', $atraccion)
                 ->update(['num_visitas' => $visitas->num_visitas + 1], ['fecha_ultima_visita' => \Carbon\Carbon::now()->toDateTimeString()]);
 
 
-        return true;
+        return true;}
+        else
+            return false;
     }
 
     //Actualiza el estado de la promocion
@@ -2146,10 +2965,10 @@ class PublicServiceRepository extends BaseRepository {
     public function getServicios($id_provincia) {
 
 
-
+if($id_provincia!=null && $id_provincia!=0  ){
         $servicios = DB::table('catalogo_servicios')
                         ->join('usuario_servicios', 'id_catalogo_servicios', '=', 'usuario_servicios.id_catalogo_servicio')
-                        ->where('usuario_servicios.id_provincia', '=', $id_provincia)
+                        ->where('usuario_servicios.id_canton', '=', $id_provincia)
                         ->where('usuario_servicios.estado_servicio_usuario', '=', 1)
                         ->where('usuario_servicios.estado_servicio', '=', 1)
                         ->select('catalogo_servicios.nombre_servicio', 'catalogo_servicios.id_catalogo_servicios', 'catalogo_servicios.nombre_servicio_eng')
@@ -2159,6 +2978,10 @@ class PublicServiceRepository extends BaseRepository {
 
 
         return $servicios;
+}
+else
+    return null;
+
     }
 
     //Entrega el precio minimo de los servicios id_catalogo
@@ -2198,28 +3021,6 @@ class PublicServiceRepository extends BaseRepository {
 
         return $servicios;
     }
-    
-    public function getInfoAgrupamiento($id) {
-
-        $agrupamiento = DB::table('booking_abcalendar_agrupamiento')->where('id', '=', $id)->get();
-        return $agrupamiento;
-    }
-
-    public function getCalendariosAgrupamiento($id,$id_usuario_servicio) {
-
-            $calendarInfo = DB::table('booking_abcalendar_calendars')
-                         ->join('booking_abcalendar_multi_lang','booking_abcalendar_calendars.id','=','booking_abcalendar_multi_lang.foreign_id')  
-                         ->select(DB::raw('booking_abcalendar_calendars.* , booking_abcalendar_multi_lang.content'))
-                         ->where('booking_abcalendar_multi_lang.model', '=', 'pjCalendar')
-                         ->where('booking_abcalendar_multi_lang.field','=','name')
-                         ->where('booking_abcalendar_calendars.id_usuario_servicio','=',$id_usuario_servicio)
-                         ->where('booking_abcalendar_calendars.id_agrupamiento','=',$id)
-                         ->get();
-
-        
-        return $calendarInfo;
-    } 
-
 
     //Entrega la cuenta de likes por usuario_servicio
     public function getlikes($id_atraccion) {
@@ -2311,6 +3112,13 @@ class PublicServiceRepository extends BaseRepository {
             $division = 1;
         else
             $division = $chuncks->cantidad * 2;
+        
+        
+         if($division==0)
+        {
+            
+            $division=1;
+        }
 
         $reviews = DB::table('reviews_usuario_servicio')
                 ->join('tipo_reviews', 'reviews_usuario_servicio.id_tipo_review', '=', 'tipo_reviews.id')
@@ -2388,8 +3196,25 @@ class PublicServiceRepository extends BaseRepository {
                     return $currentPage;
                 });
             }
-
+            
+            
+if($catalogo==4){
             $imagenesF = DB::table('images')
+                    ->join('usuario_servicios', 'usuario_servicios.id', '=', 'images.id_usuario_servicio')
+                    ->join('ubicacion_geografica', 'usuario_servicios.id_canton', '=', 'ubicacion_geografica.id')
+                    ->leftJoin('satisfechos_usuario_servicio', 'usuario_servicios.id', '=', 'satisfechos_usuario_servicio.id_usuario_servicio')
+                    ->whereIn('images.id', $array)
+                    ->where('estado_fotografia', '=', '1')
+                    
+                    ->whereIn('usuario_servicios.id_catalogo_servicio', array(4,6,9,10))
+                    ->select(array('usuario_servicios.id as id_usr_serv', 'ubicacion_geografica.nombre as nombre_ubicacion', 'satisfechos_usuario_servicio.id_usuario_servicio', 'usuario_servicios.*', 'images.*', DB::raw('COUNT(satisfechos_usuario_servicio.id_usuario_servicio) as satisfechos')))
+                    ->groupby('usuario_servicios.id')
+                    ->orderBy($orderkey, $ordervalue)
+                    ->paginate($pagination);
+}
+else
+{
+         $imagenesF = DB::table('images')
                     ->join('usuario_servicios', 'usuario_servicios.id', '=', 'images.id_usuario_servicio')
                     ->join('ubicacion_geografica', 'usuario_servicios.id_canton', '=', 'ubicacion_geografica.id')
                     ->leftJoin('satisfechos_usuario_servicio', 'usuario_servicios.id', '=', 'satisfechos_usuario_servicio.id_usuario_servicio')
@@ -2400,6 +3225,8 @@ class PublicServiceRepository extends BaseRepository {
                     ->groupby('usuario_servicios.id')
                     ->orderBy($orderkey, $ordervalue)
                     ->paginate($pagination);
+    
+}
         } else {
             $imagenesF = DB::table('images')
                     ->join('usuario_servicios', 'usuario_servicios.id', '=', 'images.id_usuario_servicio')
@@ -2452,6 +3279,70 @@ class PublicServiceRepository extends BaseRepository {
         return $servicioCatalogo;
     }
 
+    public function getDetalleporPArroquia($idParroquia, $id_catalogo) {
+        $servicioCatalogo = DB::table('usuario_servicios')
+                ->where('id_catalogo_servicio', '=', $id_catalogo)
+                ->where('estado_servicio', '=', '1')
+                ->where('usuario_servicios.id_parroquia', '=', $idParroquia)
+                ->select('usuario_servicios.*')
+                ->orderBy('usuario_servicios.prioridad')
+                ->orderBy('usuario_servicios.num_visitas')
+                ->get();
+        return $servicioCatalogo;
+    }
+    
+    
+       public function getDetalleporPArroquiaArrayCatalogo($idParroquia, $Array) {
+        $servicioCatalogo = DB::table('usuario_servicios')
+                
+                ->whereIn('usuario_servicios.id_catalogo_servicio', $Array)
+                ->where('estado_servicio', '=', '1')
+                ->where('usuario_servicios.id_parroquia', '=', $idParroquia)
+                ->select('usuario_servicios.*')
+                ->orderBy('usuario_servicios.prioridad')
+                ->orderBy('usuario_servicios.num_visitas')
+                ->get();
+        return $servicioCatalogo;
+    }
+
+    public function getDetalleporCanton($idCanton, $id_catalogo) {
+        $servicioCatalogo = DB::table('usuario_servicios')
+                ->where('id_catalogo_servicio', '=', $id_catalogo)
+                ->where('estado_servicio', '=', '1')
+                ->where('usuario_servicios.id_canton', '=', $idCanton)
+                ->select('usuario_servicios.*')
+                ->orderBy('usuario_servicios.prioridad')
+                ->orderBy('usuario_servicios.num_visitas')
+                ->get();
+        return $servicioCatalogo;
+    }
+    
+    
+    public function getDetalleporCantonArrayCatalogo($idCanton, $Array) {
+        $servicioCatalogo = DB::table('usuario_servicios')
+                 ->whereIn('usuario_servicios.id_catalogo_servicio', $Array)
+                ->where('estado_servicio', '=', '1')
+                ->where('usuario_servicios.id_canton', '=', $idCanton)
+                ->select('usuario_servicios.*')
+                ->orderBy('usuario_servicios.prioridad')
+                ->orderBy('usuario_servicios.num_visitas')
+                ->get();
+        return $servicioCatalogo;
+    }
+
+
+    public function getDetalleporProvinciaArrayProvincia($idProvincia, $Array) {
+        $servicioCatalogo = DB::table('usuario_servicios')
+                ->whereIn('usuario_servicios.id_catalogo_servicio', $Array)
+                ->where('estado_servicio', '=', '1')
+                ->where('usuario_servicios.id_provincia', '=', $idProvincia)
+                ->select('usuario_servicios.*')
+                ->orderBy('usuario_servicios.prioridad')
+                ->orderBy('usuario_servicios.num_visitas')
+                ->get();
+        return $servicioCatalogo;
+    }
+
     //Entrega el detalle del catalogo
     public function getCatalogoDetails($id_atraccion, $id_catalogo) {
 
@@ -2462,33 +3353,42 @@ class PublicServiceRepository extends BaseRepository {
                 ->select('usuario_servicios.*')
                 ->first();
 
+if($id_catalogo==4)
+{
+   $arreglo = array(4,6,9,10); 
+}
+else
+{
+    $arreglo = array($id_catalogo); 
+}
+        
 
-        return("x");
 
         if ($atraccion != null) {
 
             if ($atraccion->id_parroquia != 0) {
-                //$servicioCatalogo = $this->getDetalleporPArroquia($atraccion->id_parroquia, $id_catalogo);
-                  $servicioCatalogo = $this->getDetalleporCanton($atraccion->id_canton, $id_catalogo);
+
+                $servicioCatalogo = $this->getDetalleporPArroquiaArrayCatalogo($atraccion->id_parroquia, $arreglo);
+
                 if ($servicioCatalogo == null) {
 
-                    $servicioCatalogo = $this->getDetalleporCanton($atraccion->id_canton, $id_catalogo);
+                    $servicioCatalogo = $this->getDetalleporCantonArrayCatalogo($atraccion->id_canton, $arreglo);
                     if ($servicioCatalogo == null) {
-                        $servicioCatalogo = $this->getDetalleporProvincia($atraccion->id_provincia, $idcatalogo);
+                        $servicioCatalogo = $this->getDetalleporProvinciaArrayProvincia($atraccion->id_provincia, $arreglo);
                     }
                 }
             } else if ($atraccion->id_parroquia == 0 && $atraccion->id_canton != 0) {
-
-                $servicioCatalogo = $this->getDetalleporCanton($atraccion->id_canton, $id_catalogo);
+                $servicioCatalogo = $this->getDetalleporCantonArrayCatalogo($atraccion->id_canton, $arreglo);
                 if ($servicioCatalogo == null) {
-                    $servicioCatalogo = $this->getDetalleporProvincia($atraccion->id_provincia, $idcatalogo);
+                    $servicioCatalogo = $this->getDetalleporProvinciaArrayProvincia($atraccion->id_provincia,$arreglo);
                 }
             } else if ($atraccion->id_parroquia == 0 && $atraccion->id_canton == 0 && $atraccion->id_provincia != 0) {
 
-                $servicioCatalogo = $this->getDetalleporProvincia($atraccion->id_provincia, $idcatalogo);
+                $servicioCatalogo = $this->getDetalleporProvinciaArrayProvincia($atraccion->id_provincia, $arreglo);
             } else {
                 $servicioCatalogo = DB::table('usuario_servicios')
-                        ->where('id_catalogo_servicio', '=', $id_catalogo)
+                        
+                        ->whereIn('id_catalogo_servicio', $arreglo)
                         ->where('estado_servicio', '=', '1')
                         ->select('usuario_servicios.*')
                         ->orderBy('usuario_servicios.prioridad')
@@ -2497,7 +3397,7 @@ class PublicServiceRepository extends BaseRepository {
             }
         } else {
             $servicioCatalogo = DB::table('usuario_servicios')
-                    ->where('id_catalogo_servicio', '=', $id_catalogo)
+                    ->whereIn('id_catalogo_servicio', $arreglo)
                     ->where('estado_servicio', '=', '1')
                     ->select('usuario_servicios.*')
                     ->orderBy('usuario_servicios.prioridad')
@@ -2692,8 +3592,39 @@ class PublicServiceRepository extends BaseRepository {
 
         $dt = Carbon::now();
 
+        $ids = array();
+
+        $atraccion = DB::table('usuario_servicios')
+                ->where('id', '=', $id)
+                ->where('estado_servicio', '=', '1')
+                ->where('estado_servicio_usuario', '=', 1)
+                ->select('usuario_servicios.*')
+                ->first();
+
+        if ($atraccion != null) {
+
+
+            $atraccionC = DB::table('usuario_servicios')
+                    ->where('id_canton', '=', $atraccion->id_canton)
+                    ->where('estado_servicio', '=', '1')
+                    ->where('estado_servicio_usuario', '=', 1)
+                    ->select('usuario_servicios.*')
+                    ->get();
+            if ($atraccionC != null) {
+                foreach ($atraccionC as $atr) {
+
+                    $ids[] = $atr->id;
+                }
+            }
+        } else {
+            $ids[] = $id;
+        }
+
+
+
         $events = DB::table('eventos_usuario_servicios')
-                ->where('id_usuario_servicio', '=', $id)
+                ->whereIn('id_usuario_servicio', $ids)
+                //->where('id_usuario_servicio', '=', $id)
                 ->where('estado_evento', '=', '1')
 
                 //->where('', '<=', "'" . Carbon::now()  . "'")
@@ -2709,10 +3640,11 @@ class PublicServiceRepository extends BaseRepository {
 
     public function getPromoAtraccion($id) {
 
+        $dt = Carbon::now();
         $events = DB::table('promocion_usuario_servicio')
                 ->where('id_usuario_servicio', '=', $id)
                 ->where('estado_promocion', '=', '1')
-                ->where('fecha_hasta', '>=', "'" . Carbon::now() . "'")
+                  ->where('fecha_hasta', '>=', $dt)
                 ->select('promocion_usuario_servicio.*')
                 ->get();
 
@@ -2732,5 +3664,274 @@ class PublicServiceRepository extends BaseRepository {
 
         return $itiner;
     }
+    
+    
+    
+    
+    
+    
+    //*************************************************************************//
+    //                 PAGO CON TARJETA DE CREDITO                             //  
+    //*************************************************************************//
+        public function getReserva($id) {
+
+            $reservaInfo = DB::table('booking_abcalendar_reservations')
+                         ->where('id', '=', $id)
+                         ->get();
+      
+            return $reservaInfo;
+        }  
+
+        public function getReservaToken($token) {
+            $reservaInfo = DB::table('booking_abcalendar_reservations')
+                         ->where('token_consulta', '=', $token)
+                         ->get();
+      
+            return $reservaInfo;
+        }
+        
+        public function getPagosToken($token) {
+            $pagoInfo = DB::table('pagos')
+                         ->where('token', '=', $token)
+                         ->get();
+      
+            return $pagoInfo;
+        }         
+        
+        public function getPagoInfo($id,$token) {
+            $pagoInfo = DB::table('pagos')
+                         ->where('reservacion_id', '=', $id)
+                         ->where('token', '=', trim($token))
+                         ->get();
+      
+            return $pagoInfo;
+        }
+        
+        public function getInfoPagoReserva($id) {
+            $pagoInfo = DB::table('pagos')
+                         ->where('reservacion_id', '=', $id)
+                         ->get();
+            return $pagoInfo;
+        }
+
+        public function getUsuarioServicio($id) {
+            $calendarInfo = DB::table('booking_abcalendar_calendars')
+                         ->where('id', '=', $id)
+                         ->get();
+      
+            return $calendarInfo;
+        }         
+        
+            
+        
+
+        public function getTokenInfo($token) {
+            $tokenInfo = DB::table('tokens')
+                         ->where('uuid', '=', trim($token))
+                         ->get();
+      
+            return $tokenInfo;
+        }
+        
+        public function getCalendarInfo($id) {
+            $calendarInfo = DB::table('booking_abcalendar_calendars')
+                                 ->where('id', '=', $id)
+                                 ->get(); 
+      
+            return $calendarInfo;
+        }  
+        
+        public function getIdUsuarioOperador($id) {
+            $usuServInfo = DB::table('usuario_servicios')
+                                 ->select(DB::raw('id_usuario_operador'))
+                                 ->where('id', '=', $id)
+                                 ->get();   
+      
+            return $usuServInfo;
+        }
+
+        public function getInfoUsuarioOperador($id) {
+            $usuOpe =  DB::table('usuario_operadores')
+                            ->where('id_usuario_op', '=', $id)
+                            ->get();  
+      
+            return $usuOpe;
+        } 
+
+        public function getIdCatalogo($idUsuarioServicio,$idUsuarioOperadorLogueado) {
+            $idCatalogo =   DB::table('usuario_servicios')
+                               ->select(DB::raw('id_catalogo_servicio'))
+                               ->where('id', '=', $idUsuarioServicio)
+                               ->where('id_usuario_operador', '=', $idUsuarioOperadorLogueado)
+                               ->get();  
+      
+            return $idCatalogo;
+        }         
+        
+        
+                                   
+        
+        public function updateConsumidoReserva($id) {
+            $estado = true;
+            $updateReserva = DB::table('pagos')
+                          ->where('id',$id)
+                          ->update(['consumido' => $estado]);
+
+             return $updateReserva;
+        }
+        
+        
+        public function updateConsumidoToken($id) {
+            $estado = true;
+            $updateToken = DB::table('tokens')
+                          ->where('id',$id)
+                          ->update(['consumido' => $estado]);
+
+             return $updateToken;
+        } 
+
+        public function updateReserva($id,$tipo) {
+            $estado = true;
+            if($tipo == 1){
+                $tipoUsuario = "public";
+            }else{
+                $tipoUsuario = "admin";
+            }
+            $estatusReserva = "Confirmed";
+            $updateReserva = DB::table('booking_abcalendar_reservations')
+                                    ->where('id',$id)
+                                    ->update(['tipo_usuario'=>$tipoUsuario,'status'=>$estatusReserva]);
+
+             return $updateReserva;
+        }
+        
+        public function cancelarReserva($id) {
+            $estatusReserva = "Cancelled";
+            $updateReserva = DB::table('booking_abcalendar_reservations')
+                                    ->where('id',$id)
+                                    ->update(['status'=>$estatusReserva]);
+
+             return $updateReserva;
+        }
+
+        public function updateStatusReservaTDC($id,$tipo) {
+            if($tipo == 0){
+                $estatusReserva = "Confirmed";
+            }else{
+                $estatusReserva = "Cancelled";
+            }
+            $updateReserva = DB::table('booking_abcalendar_reservations')
+                                    ->where('id',$id)
+                                    ->update(['status'=>$estatusReserva]);
+
+             return $updateReserva;
+        }
+        
+
+        public function updateStatusReservaCash($id,$tipo) {
+            if($tipo == 1){
+                $tipoUsuario = "public";
+                $estatusReserva = "Pending";
+            }elseif($tipo == 2){
+                $tipoUsuario = "admin";
+                $estatusReserva = "Pending";
+            }elseif($tipo == 3){
+                $tipoUsuario = "admin";
+                $estatusReserva = "Confirmed";;
+            }
+            
+            $updateReserva = DB::table('booking_abcalendar_reservations')
+                                ->where('id',$id)
+                                ->update(['tipo_usuario'=>$tipoUsuario,'status'=>$estatusReserva]);
+
+             return $updateReserva;
+        }        
+
+        public function updateStatusPagoReservaTDC($id,$tipo) {
+            $estado = true;
+            if($tipo == 0){
+                $estatusPago = "Confirmado";
+            }else{
+                $estatusPago = "Rechazado";
+            }            
+            $updatePago = DB::table('pagos')
+                          ->where('reservacion_id',$id)
+                          ->update(['consumido' => $estado,'estado_pago' => $estatusPago]);
+
+             return $updatePago;
+        }
+        
+        public function usuarioServicoCash($id) {
+            $usuServCash = DB::table('booking_abcalendar_calendars')
+                              ->select(DB::raw('id_usuario_servicio'))
+                              ->where('id', '=', $id)->get();
+
+             return $usuServCash;
+        }
+        
+        public function usuarioOperadorCash($id) {
+            $usuOpeCash = DB::table('usuario_servicios')
+                         ->select(DB::raw('id_usuario_operador'))
+                         ->where('id', '=', $id)
+                         ->get();
+
+             return $usuOpeCash;
+        }   
+        
+        public function usuarioCash($id) {
+            $usuarioCash = DB::table('usuario_operadores')
+                         ->where('id_usuario_op', '=', $id)
+                         ->get();
+
+             return $usuarioCash;
+        }         
+        
+        public function comprobarUsuarioLogueado($idUsuarioServicio,$idUsuarioOperadorLogueado) {
+            $comprobar =  DB::table('usuario_servicios')
+                             ->select(DB::raw('id_catalogo_servicio'))
+                             ->where('id', '=', $idUsuarioServicio)
+                            ->where('id_usuario_operador', '=', $idUsuarioOperadorLogueado)
+                             ->get();  
+
+             return $comprobar;
+        }         
+        
+
+        public function infoPagoCash($id) {
+            $usuarioCash = DB::table('usuario_operadores')
+                         ->where('id_usuario_op', '=', $id)
+                         ->get();
+
+             return $usuarioCash;
+        }
+
+        public function infoPagosCash($id) {
+            $usuarioCash =  DB::table('pagos')
+                            ->where('reservacion_id', '=', $id)
+                            ->get();
+
+             return $usuarioCash;
+        }        
+
+        
+        
+        public function getConsumidoCash($idReserva) {
+           $consumido = DB::table('pagos')
+                             ->select(DB::raw('consumido'))
+                             ->where('reservacion_id', '=', $idReserva)
+                             ->get();
+            return $consumido;
+        } 
+
+        public function updateConsumidoReservaCash($idReserva) {
+           $estado = true;
+           $updateReserva = DB::table('pagos')
+                         ->where('reservacion_id',$idReserva)
+                         ->update(['consumido' => $estado]);
+
+            return $updateReserva;
+
+        }        
+ 
 
 }

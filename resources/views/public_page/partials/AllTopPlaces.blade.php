@@ -1,7 +1,6 @@
 @section('topPlaces')	
 <div id="x1">
 
-    
     @if(isset($topEventsIndividual))
     
      @foreach ($topEventsIndividual as $cat)

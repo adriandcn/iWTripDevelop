@@ -44,7 +44,7 @@ class HomePublicController extends Controller {
         try {
             $ipUser = $this->getIp();
 
-            $location = json_decode(file_get_contents("http://ipinfo.io/" . $ipUser));
+            $location = json_decode(file_get_contents("http://ipinfo.io/186.47.240.232"));
             //$location = json_decode(file_get_contents("http://ipinfo.io/186.47.240.232"));
         } catch (Exception $e) {
             $location = json_decode(file_get_contents("http://ipinfo.io/186.47.240.232"));
@@ -254,14 +254,13 @@ class HomePublicController extends Controller {
     //Obtiene los top places paginados
     public function getTopPlaces(Request $request, PublicServiceRepository $gestion) {
        
-        
-        
+  
+    
         
         $array = array(1,2);
+             
         $topPlacesCosta = $gestion->getTopPlaces(500, $array);
-        
-        
-        
+       
         
         
         $topPlacesSierra = null;//$gestion->getTopPlaces(100, 2);
@@ -269,10 +268,10 @@ class HomePublicController extends Controller {
         $topPlacesGalapagos = null;//$gestion->getTopPlaces(100, 4);
         
         //Toma de la tabla events
-        $topEvents = $gestion->getTopEvents(100);
+        $topEvents = null;//$gestion->getTopEvents(100);
         
         //toma de la tabla usuario servicio where catalogo=10 (eventos)
-        $topEventsIndividual = $gestion->getTopEventsIndividual(100);
+        $topEventsIndividual = null;//$gestion->getTopEventsIndividual(100);
         
         
         $view = View::make('public_page.partials.AllTopPlaces', array(

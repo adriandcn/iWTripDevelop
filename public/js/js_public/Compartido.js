@@ -373,6 +373,7 @@ function GetDataAjaxEventsInd(url) {
 
 //Javascript para cargar las imagenes via ajax con el botonload more
 function GetDataAjaxTopPlacesHome(url) {
+   
     $(".moreImagesTop").LoadingOverlay("show");
     var count= $(".pagina").val();
        $.ajax({
@@ -385,7 +386,7 @@ function GetDataAjaxTopPlacesHome(url) {
         success: function (data) {
             window.current_page=current_page+1;
             
-            $(".cercanos").append(data.cercanos);
+            //$(".cercanos").append(data.cercanos);
            // $(".cercanos").LoadingOverlay("hide", true);
 
 

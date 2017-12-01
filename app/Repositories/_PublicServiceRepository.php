@@ -2758,6 +2758,7 @@ $dt = Carbon::now();
 //3:Oriente
 //4:Galapagos
 
+        dd($n);
         $array = array($region);
 
         $final_top = array();
@@ -2774,7 +2775,7 @@ $dt = Carbon::now();
                            // ->where('usuario_servicios.id_provincia', '=', $provincia->id)
                             //->where('usuario_servicios.id_catalogo_servicio', '=', '4')
                     
-                    ->whereIn('usuario_servicios.id_catalogo_servicio', array(4, 8,1,2,9,3))
+                    ->whereIn('usuario_servicios.id_catalogo_servicio', array(4, 8,9))
                             ->where('usuario_servicios.estado_servicio', '=', '1')
                     
                     
@@ -2785,6 +2786,7 @@ $dt = Carbon::now();
                             ->orderByRaw('RAND()')
                             ->take($n)->get();
 
+            
             if ($top != null) {
                 foreach ($top as $to) {
                     $imagenes = DB::table('images')
